@@ -42,6 +42,7 @@ public class ProduitCommandeDAO {
     }
     
     
+    @SuppressWarnings("unchecked")
     public List<Produit> findProductsOfOrder(Long orderId) throws Exception{
         EntityManager em = JpaUtil.obtenirEntityManager();
         List<Produit> produits = new ArrayList<>();
