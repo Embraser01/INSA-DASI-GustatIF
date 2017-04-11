@@ -19,6 +19,9 @@
           <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.7.5" />
           <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
           <element id="library" level="project" name="Maven: joda-time:joda-time:2.4" />
+          <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.6.1" />
+          <element id="library" level="project" name="Maven: fr.insalyon.dasi:GustatIF:1.0-SNAPSHOT" />
         </element>
       </element>
     </root>
