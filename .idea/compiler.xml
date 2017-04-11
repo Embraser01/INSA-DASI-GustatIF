@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="GustatIF" target="1.8" />
-      <module name="WebApp" target="1.8" />
+      <module name="WebApp" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
