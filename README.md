@@ -24,6 +24,19 @@ Tout d'abord cloner le repo git depuis Netbeans/IntelliJ/Git
 
 ### Netbeans
 
+Sous Netbeans, ouvrir le projet INSA-DASI-GustatIF. 
+
+Maven a du s'initialiser et vous pouvez mettre à jour les dépendances.
+Ensuite il faut ajouter le module `GustatIF` à `WebApp` en tant que dépendance. 
+Pour cela :
+
+> Onglet Projects > WebApp > Dependencies (Clic droit) > Add Dependency >
+ Onglet Open Projects > GustatIF
+ 
+A partir de là, le projet devrait ce compiler correctement.
+
+------------------------------------------------------------
+
 ### IntelliJ IDEA
 
 Sous IntelliJ, ouvrir le projet INSA-DASI-GustatIF. 
