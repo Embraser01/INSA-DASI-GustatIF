@@ -1,7 +1,7 @@
 # Projet DASI - Partie 2 - GustatIF
 
 ## Presentation
-  Ceci est un projet fait enDASI 3IF à l'INSA de Lyon.
+  Ceci est un projet fait en DASI 3IF à l'INSA de Lyon.
   Auteurs :
 *    Marc-Antoine FERNANDES
 *    Lucas ONO
@@ -26,14 +26,13 @@ Tout d'abord cloner le repo git depuis Netbeans/IntelliJ/Git
 
 Sous Netbeans, ouvrir le projet INSA-DASI-GustatIF. 
 
-Maven a du s'initialiser et vous pouvez mettre à jour les dépendances.
-Ensuite il faut ajouter le module `GustatIF` à `WebApp` en tant que dépendance. 
-Pour cela :
+Selectionner l'application WebApp comme application principale.
+A partir de là, le projet devrait pouvoir s'executer correctement.
 
-> Onglet Projects > WebApp > Dependencies (Clic droit) > Add Dependency >
- Onglet Open Projects > GustatIF
- 
-A partir de là, le projet devrait ce compiler correctement.
+Ne pas oublier de lancer le serveur Derby depuis l'onglet __Service__ !
+
+N.B. : Si jamais Netbeans n'arrive pas à déployer le fichier __.war__, on peut le faire depuis le manager Tomcat.
+    Ce fichier est disponible dans `WebApp/target/`
 
 ------------------------------------------------------------
 
@@ -41,17 +40,7 @@ A partir de là, le projet devrait ce compiler correctement.
 
 Sous IntelliJ, ouvrir le projet INSA-DASI-GustatIF. 
 
-Maven a du s'initialiser et vous pouvez mettre à jour les dépendances.
-Ensuite il faut ajouter le module `GustatIF` à `WebApp` en tant que dépendance. 
-Pour cela :
-
-> File > Project Structure > Modules > WebApp >
- Onglet Dependencies > Add > Module Dependency > GustatIF
-
-A partir de là, le projet devrait ce compiler correctement.
-
-
-Maintenant il ne reste plus qu'à lancer l'application, en deux temps :
+Le projet est déjà prêt à être lancé ! Cela ce fait en deux temps :
 * Lancer le serveur Derby (Windows) : ```"C:\Program Files\Java\jdk1.8.0_77\db\bin\startNetworkServer" -noSecurityManager```
 * Déployer l'application sur Tomcat : Bouton start sur IntelliJ
 
