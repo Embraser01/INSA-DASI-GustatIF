@@ -1,5 +1,6 @@
 import actions.*;
 import exception.NotLoggedException;
+import exception.SignUpException;
 import metier.service.ServiceMetier;
 import util.JpaUtil;
 
@@ -83,6 +84,8 @@ public class ActionServlet extends HttpServlet {
             action.execute(req, res);
         } catch (NotLoggedException e) {
             // TODO SEND RESPONSE
+        } catch (SignUpException e) {
+            //TODO SEND RESPONSE
         }
     }
 
