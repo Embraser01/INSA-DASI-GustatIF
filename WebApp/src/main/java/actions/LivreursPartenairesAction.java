@@ -23,6 +23,6 @@ public class LivreursPartenairesAction extends Action {
 
         List<Livreur> livreurs = this.serviceMetier.livreursPartenaires();
 
-        res.getWriter().print(new Gson().toJson(livreurs));
+        req.setAttribute(RESULTS_FIELD, livreurs);
     }
 }
