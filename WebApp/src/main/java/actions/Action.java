@@ -14,6 +14,7 @@ import java.io.IOException;
 public abstract class Action {
 
     public static final String SESSION_CLIENT_FIELD = "client";
+    public static final String RESULTS_FIELD = "results";
 
     protected ServiceMetier serviceMetier;
 
