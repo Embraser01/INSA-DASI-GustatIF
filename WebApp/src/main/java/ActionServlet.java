@@ -1,6 +1,5 @@
-import actions.Action;
-import actions.ProduitsDisponibleAction;
-import actions.RestaurantsPartenairesAction;
+import actions.*;
+import exception.NotLoggedException;
 import metier.service.ServiceMetier;
 import util.JpaUtil;
 
@@ -45,18 +44,46 @@ public class ActionServlet extends HttpServlet {
         Action action;
 
         switch (todo) {
-            case "produitsDisponible":
-                action = new ProduitsDisponibleAction(serviceMetier);
+            case "inscription":
+                action = new InscriptionAction(serviceMetier);
+                break;
+            case "connexion":
+                action = new ConnexionAction(serviceMetier);
+                break;
+            case "majInfoClient":
+                action = new MajInfoClientAction(serviceMetier);
                 break;
             case "restaurantsPartenaires":
                 action = new RestaurantsPartenairesAction(serviceMetier);
+                break;
+            case "produitsDisponible":
+                action = new ProduitsDisponibleAction(serviceMetier);
+                break;
+            case "clientsGustatif":
+                action = new ClientsGustatifAction(serviceMetier);
+                break;
+            case "livreursPartenaires":
+                action = new LivreursPartenairesAction(serviceMetier);
+                break;
+            case "validerCommande":
+                action = new ValiderCommandeAction(serviceMetier);
+                break;
+            case "cloturerLivraison":
+                action = new CloturerLivraisonAction(serviceMetier);
+                break;
+            case "rechercherLivraison":
+                action = new RechercherLivraisonAction(serviceMetier);
                 break;
             default:
                 res.sendError(404);
                 return;
         }
 
-        action.execute(req, res);
+        try {
+            action.execute(req, res);
+        } catch (NotLoggedException e) {
+            // TODO SEND RESPONSE
+        }
     }
 
 
