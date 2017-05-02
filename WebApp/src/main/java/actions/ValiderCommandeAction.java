@@ -1,6 +1,9 @@
 package actions;
 
 import com.google.gson.Gson;
+import exception.NotLoggedException;
+import metier.modele.Client;
+import metier.modele.Commande;
 import metier.modele.Produit;
 import metier.service.ServiceMetier;
 
@@ -8,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.NotActiveException;
 import java.util.List;
 
 
@@ -18,10 +22,13 @@ public class ValiderCommandeAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException, NotLoggedException {
 
-        List<Produit> produits = this.serviceMetier.produitsDisponibles(null);
+        if (!isClient(req, res)) throw new NotLoggedException();
 
-        res.getWriter().print(new Gson().toJson(produits));
+
+        Commande commande = new Commande((Client) req.getSession().getAttribute(SESSION_CLIENT_FIELD));
+
+        // TODO READ FROM JSON
     }
 }
