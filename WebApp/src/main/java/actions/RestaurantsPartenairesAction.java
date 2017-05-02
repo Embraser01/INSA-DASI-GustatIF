@@ -20,10 +20,9 @@ public class RestaurantsPartenairesAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//        List<Restaurant> restaurants = this.serviceMetier.restaurantsPartenaires();
-        List<Restaurant> restaurants = new ArrayList<>();
 
-        restaurants.add(new Restaurant("Bistrot du coin", "Bière", "12 rue de la chapelle"));
+        List<Restaurant> restaurants = this.serviceMetier.restaurantsPartenaires();
+
 
         res.getWriter().print(new Gson().toJson(restaurants));
     }
