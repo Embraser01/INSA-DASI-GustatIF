@@ -1,5 +1,8 @@
 package actions;
 
+
+import exception.NullAvailableProductException;
+
 import metier.modele.Produit;
 import metier.modele.Restaurant;
 import metier.service.ServiceMetier;
@@ -17,11 +20,15 @@ public class ProduitsDisponibleAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException {
+
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, NullAvailableProductException {
 
         Restaurant restaurant = (Restaurant) req.getAttribute("restaurant");
 
-        List<Produit> produits = this.serviceMetier.produitsDisponibles(restaurant);
+        List<Produit> produits = serviceMetier.produitsDisponibles(restaurant);
+        if (produits == null) {
+            throw new NullAvailableProductException();
+        }
 
         req.setAttribute(RESULTS_FIELD,produits);
     }
