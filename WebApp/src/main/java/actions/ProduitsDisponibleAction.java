@@ -25,6 +25,10 @@ public class ProduitsDisponibleAction extends Action {
 
         List<Produit> produits = this.serviceMetier.produitsDisponibles(restaurant);
 
-        res.getWriter().print(new Gson().toJson(produits));
+        if (produits == null) {
+            res.sendError(400,"No products were found. Check requested restaurant");
+        }
+
+        req.setAttribute(RESULTS_FIELD,produits);
     }
 }
