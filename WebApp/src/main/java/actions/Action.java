@@ -1,6 +1,7 @@
 package actions;
 
 import exception.NotLoggedException;
+import exception.SignUpException;
 import metier.modele.Client;
 import metier.service.ServiceMetier;
 
@@ -21,7 +22,7 @@ public abstract class Action {
     }
 
     public abstract void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException, NotLoggedException;
+            throws ServletException, IOException, NotLoggedException, SignUpException;
 
 
     protected boolean isClient(HttpServletRequest req, HttpServletResponse res)

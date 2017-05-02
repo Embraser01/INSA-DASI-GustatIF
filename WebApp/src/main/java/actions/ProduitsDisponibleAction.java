@@ -2,6 +2,7 @@ package actions;
 
 import com.google.gson.Gson;
 import metier.modele.Produit;
+import metier.modele.Restaurant;
 import metier.service.ServiceMetier;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,9 @@ public class ProduitsDisponibleAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        List<Produit> produits = this.serviceMetier.produitsDisponibles(null);
+        Restaurant restaurant = (Restaurant) req.getAttribute("restaurant");
+
+        List<Produit> produits = this.serviceMetier.produitsDisponibles(restaurant);
 
         res.getWriter().print(new Gson().toJson(produits));
     }
