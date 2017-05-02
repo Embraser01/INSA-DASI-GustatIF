@@ -1,5 +1,6 @@
 import actions.Action;
 import com.google.gson.Gson;
+import metier.modele.Client;
 import metier.modele.Livreur;
 import metier.modele.Produit;
 import metier.modele.Restaurant;
@@ -40,8 +41,9 @@ public class JsonView {
         res.getWriter().print(new Gson().toJson(produits));
     }
 
-    public static void clientsGustatif(HttpServletRequest req, HttpServletResponse res) {
-
+    public static void clientsGustatif(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        List<Client> clients = (List)req.getAttribute(Action.RESULTS_FIELD);
+        res.getWriter().print(new Gson().toJson(clients));
     }
 
     public static void livreursPartenaires(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -55,7 +57,7 @@ public class JsonView {
     }
 
     public static void cloturerLivraison(HttpServletRequest req, HttpServletResponse res) {
-
+        System.out.println("commande cloture");
     }
 
     public static void rechercherLivraison(HttpServletRequest req, HttpServletResponse res) {
