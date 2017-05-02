@@ -17,7 +17,7 @@ public class JsonView {
     public static void inscription(HttpServletRequest req, HttpServletResponse res) {
 
         // To use results :
-
+        // TODO Set header for json
         req.getAttribute(Action.RESULTS_FIELD);
     }
 
@@ -64,23 +64,18 @@ public class JsonView {
 
     }
 
-    public static void notFound(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.sendError(404);
-    }
-
-    public static void forbidden(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.sendError(403);
-    }
-
     public static void notFound(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
-        res.sendError(404, msg);
+        res.setStatus(404);
+        res.getWriter().print("{error: 'Not Found : "+ msg + "'}");
     }
 
     public static void forbidden(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
-        res.sendError(403, msg);
+        res.setStatus(403);
+        res.getWriter().print("{error: 'Forbidden : "+ msg + "'}");
     }
 
     public static void badRequest(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
-        res.sendError(400, msg);
+        res.setStatus(400);
+        res.getWriter().print("{error: 'Bad Request : "+ msg + "'}");
     }
 }
