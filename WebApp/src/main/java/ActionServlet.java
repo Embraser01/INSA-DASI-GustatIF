@@ -84,8 +84,6 @@ public class ActionServlet extends HttpServlet {
             action.execute(req, res);
         } catch (NotLoggedException | SignUpException e) {
             // TODO SEND RESPONSE
-        } catch (SignUpException e) {
-            //TODO SEND RESPONSE
         }
 
 
