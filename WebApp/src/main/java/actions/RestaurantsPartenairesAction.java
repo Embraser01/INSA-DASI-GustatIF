@@ -24,6 +24,6 @@ public class RestaurantsPartenairesAction extends Action {
         List<Restaurant> restaurants = this.serviceMetier.restaurantsPartenaires();
 
 
-        res.getWriter().print(new Gson().toJson(restaurants));
+        req.setAttribute(RESULTS_FIELD,restaurants);
     }
 }
