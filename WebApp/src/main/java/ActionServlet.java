@@ -38,7 +38,7 @@ public class ActionServlet extends HttpServlet {
         String todo = req.getParameter("action");
 
         if (todo == null) {
-            res.sendError(404);
+            JsonView.notFound(req, res, "");
             return;
         }
 
@@ -76,7 +76,7 @@ public class ActionServlet extends HttpServlet {
                 action = new RechercherLivraisonAction(serviceMetier);
                 break;
             default:
-                res.sendError(404, "Unknown ");
+                JsonView.notFound(req, res, "Unknown action !");
                 return;
         }
 
@@ -93,7 +93,7 @@ public class ActionServlet extends HttpServlet {
                 JsonView.inscription(req, res);
                 break;
             case "connexion":
-               JsonView.connexion(req, res);
+                JsonView.connexion(req, res);
                 break;
             case "majInfoClient":
                 JsonView.majInfoClient(req, res);

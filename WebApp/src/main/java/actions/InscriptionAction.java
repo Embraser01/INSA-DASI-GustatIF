@@ -21,7 +21,7 @@ public class InscriptionAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException, SignUpException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, SignUpException {
 
         String name = (String) req.getAttribute("name");
         String surname = (String) req.getAttribute("surname");

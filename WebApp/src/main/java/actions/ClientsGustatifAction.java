@@ -18,10 +18,10 @@ public class ClientsGustatifAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException {
 
         List<Produit> produits = this.serviceMetier.produitsDisponibles(null);
 
-        res.getWriter().print(new Gson().toJson(produits));
+        req.setAttribute(RESULTS_FIELD, produits);
     }
 }

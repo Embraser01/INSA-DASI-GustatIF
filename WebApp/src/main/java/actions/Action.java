@@ -23,11 +23,11 @@ public abstract class Action {
     }
 
     public abstract void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException, NotLoggedException, SignUpException;
+            throws ServletException, NotLoggedException, SignUpException;
 
 
     protected boolean isClient(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws ServletException {
 
         HttpSession session = req.getSession(true);
 

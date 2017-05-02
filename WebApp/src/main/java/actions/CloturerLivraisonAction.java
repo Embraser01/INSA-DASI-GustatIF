@@ -18,10 +18,9 @@ public class CloturerLivraisonAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException {
 
         List<Produit> produits = this.serviceMetier.produitsDisponibles(null);
 
-        res.getWriter().print(new Gson().toJson(produits));
     }
 }

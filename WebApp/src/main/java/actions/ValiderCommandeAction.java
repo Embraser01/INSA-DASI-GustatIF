@@ -18,7 +18,7 @@ public class ValiderCommandeAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException, NotLoggedException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, NotLoggedException {
 
         if (!isClient(req, res)) throw new NotLoggedException();
 

@@ -23,7 +23,7 @@ public class RechercherLivraisonAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException {
 
         List<Commande> commandes = null;
         try {
@@ -35,9 +35,9 @@ public class RechercherLivraisonAction extends Action {
                     Boolean.parseBoolean(req.getParameter("all"))
             );
         } catch (ParseException e) {
-            // TODO SEND ERROR MSG
+            // TODO SEND ERROR MSG (rethrow exception)
         }
 
-        res.getWriter().print(new Gson().toJson(commandes));
+        req.setAttribute(RESULTS_FIELD, commandes);
     }
 }
