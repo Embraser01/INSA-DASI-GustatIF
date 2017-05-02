@@ -1,6 +1,7 @@
 package actions;
 
 import exception.NotLoggedException;
+import metier.modele.Client;
 import metier.service.ServiceMetier;
 
 import javax.servlet.ServletException;
@@ -20,5 +21,15 @@ public class MajInfoClientAction extends Action {
             throws ServletException, IOException, NotLoggedException {
 
         if (!isClient(req, res)) throw new NotLoggedException();
+
+        Client client = (Client) req.getSession().getAttribute(SESSION_CLIENT_FIELD);
+
+        // FIXME Escape HTML
+
+        client.setNom(req.getParameter("lastName"));
+        client.setPrenom(req.getParameter("firstName"));
+        client.setMail(req.getParameter("mail"));
+
+        this.serviceMetier.majInfoClient(client);
     }
 }

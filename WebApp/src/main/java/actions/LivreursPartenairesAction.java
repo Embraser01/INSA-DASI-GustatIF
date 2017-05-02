@@ -1,6 +1,7 @@
 package actions;
 
 import com.google.gson.Gson;
+import metier.modele.Livreur;
 import metier.modele.Produit;
 import metier.service.ServiceMetier;
 
@@ -20,8 +21,8 @@ public class LivreursPartenairesAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        List<Produit> produits = this.serviceMetier.produitsDisponibles(null);
+        List<Livreur> livreurs = this.serviceMetier.livreursPartenaires();
 
-        res.getWriter().print(new Gson().toJson(produits));
+        res.getWriter().print(new Gson().toJson(livreurs));
     }
 }
