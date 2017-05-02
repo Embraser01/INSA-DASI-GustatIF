@@ -1,5 +1,6 @@
 import actions.*;
 import exception.NotLoggedException;
+import exception.NullAvailableProductException;
 import exception.SignUpException;
 import metier.service.ServiceMetier;
 import util.JpaUtil;
@@ -85,6 +86,10 @@ public class ActionServlet extends HttpServlet {
             action.execute(req, res);
         } catch (NotLoggedException | SignUpException e) {
             // TODO SEND RESPONSE
+        } catch ( NullAvailableProductException e){
+            //TODO use JsonView function for reporting errors
+
+            res.sendError(400,"No products were found. Check requested restaurant");
         }
 
 
