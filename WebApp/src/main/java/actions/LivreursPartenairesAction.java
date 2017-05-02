@@ -1,8 +1,6 @@
 package actions;
 
-import com.google.gson.Gson;
 import metier.modele.Livreur;
-import metier.modele.Produit;
 import metier.service.ServiceMetier;
 
 import javax.servlet.ServletException;

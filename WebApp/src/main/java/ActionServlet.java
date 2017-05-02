@@ -76,7 +76,7 @@ public class ActionServlet extends HttpServlet {
                 action = new RechercherLivraisonAction(serviceMetier);
                 break;
             default:
-                res.sendError(404);
+                res.sendError(404, "Unknown ");
                 return;
         }
 
@@ -84,6 +84,41 @@ public class ActionServlet extends HttpServlet {
             action.execute(req, res);
         } catch (NotLoggedException | SignUpException e) {
             // TODO SEND RESPONSE
+        }
+
+
+        // On fait la vue maintenant
+        switch (todo) {
+            case "inscription":
+                JsonView.inscription(req, res);
+                break;
+            case "connexion":
+               JsonView.connexion(req, res);
+                break;
+            case "majInfoClient":
+                JsonView.majInfoClient(req, res);
+                break;
+            case "restaurantsPartenaires":
+                JsonView.restaurantsPartenaires(req, res);
+                break;
+            case "produitsDisponible":
+                JsonView.produitsDisponible(req, res);
+                break;
+            case "clientsGustatif":
+                JsonView.clientsGustatif(req, res);
+                break;
+            case "livreursPartenaires":
+                JsonView.livreursPartenaires(req, res);
+                break;
+            case "validerCommande":
+                JsonView.validerCommande(req, res);
+                break;
+            case "cloturerLivraison":
+                JsonView.cloturerLivraison(req, res);
+                break;
+            case "rechercherLivraison":
+                JsonView.rechercherLivraison(req, res);
+                break;
         }
     }
 
