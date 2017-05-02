@@ -21,8 +21,10 @@ public class JsonView {
         req.getAttribute(Action.RESULTS_FIELD);
     }
 
-    public static void connexion(HttpServletRequest req, HttpServletResponse res) {
+    public static void connexion(HttpServletRequest req, HttpServletResponse res) throws IOException{
+        Client user = (Client) req.getAttribute(Action.RESULTS_FIELD);
 
+        res.getWriter().print(new Gson().toJson(user));
     }
 
     public static void majInfoClient(HttpServletRequest req, HttpServletResponse res) {

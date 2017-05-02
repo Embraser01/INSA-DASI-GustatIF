@@ -1,5 +1,6 @@
 package actions;
 
+import exception.ClientNullException;
 import metier.modele.Client;
 import metier.service.ServiceMetier;
 
@@ -16,11 +17,11 @@ public class ClientsGustatifAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, ClientNullException {
         List<Client> clients = this.serviceMetier.clientsGustatif();
 
         if (clients == null) {
-        // Exception
+            throw new ClientNullException();
         }
         req.setAttribute(RESULTS_FIELD, clients);
 

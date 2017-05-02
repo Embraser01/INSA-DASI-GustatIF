@@ -1,7 +1,5 @@
 import actions.*;
-import exception.NotLoggedException;
-import exception.NullAvailableProductException;
-import exception.SignUpException;
+import exception.*;
 import metier.service.ServiceMetier;
 import util.JpaUtil;
 
@@ -86,6 +84,10 @@ public class ActionServlet extends HttpServlet {
             action.execute(req, res);
         } catch (NotLoggedException | SignUpException e) {
             // TODO SEND RESPONSE
+        } catch(ClientNullException e) {
+
+        } catch(ConnectionFailException e) {
+
         } catch ( NullAvailableProductException e){
             //TODO use JsonView function for reporting errors
 
