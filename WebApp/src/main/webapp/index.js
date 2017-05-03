@@ -3,6 +3,7 @@
 //
 
 const DEBUG_MODE = true;
+const SERVLET_PATH = '/ActionServlet';
 
 //
 // UTILS
@@ -12,6 +13,11 @@ function log() {
     if (!DEBUG_MODE) return;
 
     return console.log(arguments);
+}
+
+
+function getActionURL(action) {
+    return SERVLET_PATH + '?action=' + action;
 }
 
 //
@@ -27,15 +33,6 @@ Vue.use(VueResource);
 
 
 //
-// ROUTER INSTANCE
-//
-
-const router = new VueRouter({
-    routes // short for routes: routes
-});
-
-
-//
 // COMPONENTS
 //
 
@@ -46,7 +43,26 @@ const HomeApp = {
 };
 
 const Login = {
-    template: '#login-component'
+    template: '#login-component',
+    data: {
+        mail: '',
+        password: ''
+    },
+    methods: {
+        login() {
+            let formData = new FormData();
+
+            formData.append('mail', this.mail);
+            formData.append('password', this.password);
+
+            this.$http.post(getActionURL('connexion'), formData).then(response => {
+                // TODO SUCCESS LOGIN
+                // GET DATA FROM response.json().then(data => this.data = data);
+            }, response => {
+                // TODO ERROR LOGIN
+            });
+        }
+    }
 };
 
 const Signup = {
@@ -174,6 +190,15 @@ const routes = [
         ]
     }
 ];
+
+//
+// ROUTER INSTANCE
+//
+
+const router = new VueRouter({
+    routes // short for routes: routes
+});
+
 
 //
 // MAIN VIEW

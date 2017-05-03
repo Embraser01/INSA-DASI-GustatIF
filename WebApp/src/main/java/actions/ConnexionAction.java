@@ -23,11 +23,13 @@ public class ConnexionAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, ConnectionFailException {
         HttpSession session = req.getSession(true);
-        Client user = (Client)req.getAttribute(SESSION_CLIENT_FIELD);
+
         String mail = req.getParameter("mail");
-        String ids = req.getParameter("id");
-        Long  id = Long.valueOf(ids).longValue();
-        user = this.serviceMetier.connexion(mail,id);
+
+        String ids = req.getParameter("password");
+        Long  id = Long.valueOf(ids);
+
+        Client user = this.serviceMetier.connexion(mail,id);
         if (user == null) {
             throw new ConnectionFailException();
         }
