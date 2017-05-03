@@ -100,10 +100,6 @@ const Dashboard = {
     template: '#dashboard-component'
 };
 
-const Manager = {
-    template: '#manager-component'
-};
-
 const DeliveryHistory = {
     template: '#delivery-history-component'
 };
