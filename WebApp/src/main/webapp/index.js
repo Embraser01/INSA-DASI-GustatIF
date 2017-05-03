@@ -44,9 +44,13 @@ const HomeApp = {
 
 const Login = {
     template: '#login-component',
-    data: {
-        mail: '',
-        password: ''
+    data: () => {
+        return {
+            form: {
+                mail: '',
+                password: ''
+            }
+        }
     },
     methods: {
         login() {
@@ -138,17 +142,15 @@ const routes = [
         }
     },
     {
-        path: '/auth', component: HomeApp,
-        children: [
-            {
-                path: 'login',
-                component: Login
-            },
-            {
-                path: 'signup',
-                component: Signup
-            }
-        ]
+        path: '/auth', component: HomeApp
+    },
+    {
+        path: '/auth/login',
+        component: Login
+    },
+    {
+        path: '/auth/signup',
+        component: Signup
     },
     {
         path: '/myaccount', redirect: '/myaccount/me',
@@ -216,9 +218,10 @@ const vm = new Vue({
     router,
     el: '#app',
 
-    data: {},
+    data: () => {
+    },
 
-    created: function () {
+    created: () => {
     },
 
     methods: {}

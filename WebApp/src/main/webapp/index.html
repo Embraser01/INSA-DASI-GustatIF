@@ -56,81 +56,108 @@
 </script>
 
 <script type="text/x-template" id="login-component">
-<div class="">
+    <div class="login-component">
+        <form @submit.stop.prevent="login">
+            <md-card md-with-hover>
+                <md-card-header>
+                    <div class="md-title">S'identifier</div>
+                </md-card-header>
 
-</div>
+                <md-card-content>
+
+                    <md-input-container>
+                        <label>Mail</label>
+                        <md-input required type="email" v-model="form.mail"></md-input>
+                        <span class="md-error">Vous devez entrer un mail valide</span>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Mot de passe</label>
+                        <md-input required type="password" v-model="form.password"></md-input>
+                        <span class="md-error">Vous devez entrer un mot de passe</span>
+                    </md-input-container>
+
+                    <!-- TODO ERROR MESSAGE -->
+                </md-card-content>
+                <md-card-actions>
+                    <md-button type="submit">Se connecter</md-button>
+                </md-card-actions>
+
+            </md-card>
+        </form>
+    </div>
 </script>
 
 <script type="text/x-template" id="signup-component">
-<div class="">
+    <div class="signup-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="myaccount-me-component">
-<div class="">
+    <div class="myaccount-me-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="myaccount-buy-component">
-<div class="">
+    <div class="myaccount-buy-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="myaccount-history-component">
-<div class="">
+    <div class="myaccount-history-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="about-component">
-<div class="">
+    <div class="about-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="shopping-cart-component">
-<div class="">
+    <div class="shopping-cart-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="home-admin-component">
-<div class="">
+    <div class="home-admin-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="manager-component">
-<div class="">
+    <div class="manager-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="delivery-component">
-<div class="">
+    <div class="delivery-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="dashboard-component">
-<div class="">
+    <div class="dashboard-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="delivery-history-component">
-<div class="">
+    <div class="delivery-history-component">
 
-</div>
+    </div>
 </script>
 
 <script type="text/x-template" id="close-delivery-component">
-<div class="">
+    <div class="close-delivery-component">
 
-</div>
+    </div>
 </script>
 
 </body>
