@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="13">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -12,6 +12,12 @@
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
             <item index="6" class="java.lang.String" itemvalue="router-view" />
+            <item index="7" class="java.lang.String" itemvalue="router-link" />
+            <item index="8" class="java.lang.String" itemvalue="md-button" />
+            <item index="9" class="java.lang.String" itemvalue="md-toolbar" />
+            <item index="10" class="java.lang.String" itemvalue="md-card" />
+            <item index="11" class="java.lang.String" itemvalue="md-card-header" />
+            <item index="12" class="java.lang.String" itemvalue="md-card-content" />
           </list>
         </value>
       </option>

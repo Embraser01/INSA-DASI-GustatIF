@@ -131,6 +131,13 @@ const CloseDelivery = {
 
 const routes = [
     {
+        path: '/',
+        beforeEnter: (to, from, next) => {
+            // TODO Check if connected
+            router.replace('/auth');
+        }
+    },
+    {
         path: '/auth', component: HomeApp,
         children: [
             {
