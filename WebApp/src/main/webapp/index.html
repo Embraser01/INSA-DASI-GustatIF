@@ -45,13 +45,14 @@
             </md-card-header>
 
             <md-card-content>
-                <router-link tag="md-button" to="/auth/signup" class="md-raised md-primary">Créer un compte
+                <router-link to="/auth/signup">
+                    <md-button class="md-raised md-primary">Créer un compte</md-button>
                 </router-link>
-                <router-link tag="md-button" to="/auth/login" class="md-raised md-primary">S'identifier</router-link>
+                <router-link to="/auth/login">
+                    <md-button class="md-raised md-primary">S'identifier</md-button>
+                </router-link>
             </md-card-content>
-
         </md-card>
-
     </div>
 </script>
 
@@ -90,31 +91,89 @@
 
 <script type="text/x-template" id="signup-component">
     <div class="signup-component">
+        <form @submit.stop.prevent="signup">
+            <md-card md-with-hover>
+                <md-card-header>
+                    <div class="md-title">Créer un compte</div>
+                </md-card-header>
 
+                <md-card-content>
+
+                    <md-input-container>
+                        <label>Nom</label>
+                        <md-input required v-model="form.name"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Prénom</label>
+                        <md-input required v-model="form.surname"></md-input>
+                    </md-input-container>
+                    <br>
+                    <md-input-container>
+                        <label>Adresse</label>
+                        <md-input required v-model="form.address"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Mail</label>
+                        <md-input required type="email" v-model="form.email"></md-input>
+                    </md-input-container>
+
+                    <!-- TODO ERROR MESSAGE -->
+                </md-card-content>
+                <md-card-actions>
+                    <md-button type="submit">Inscription</md-button>
+                </md-card-actions>
+
+            </md-card>
+        </form>
     </div>
 </script>
 
+<script type="text/x-template" id="myaccount-component">
+    <div class="myaccount-component">
+        <md-toolbar class="md-dense">
+            <h2 class="md-title" style="flex: 1">Mon Compte</h2>
+
+            <md-button class="md-icon-button">
+                <md-icon>power_settings_new</md-icon>
+            </md-button>
+        </md-toolbar>
+        <md-tabs md-fixed>
+            <md-tab id="myaccount-me-tab" md-label="Modifier mes infos">
+                <myaccount-me></myaccount-me>
+            </md-tab>
+            <md-tab id="myaccount-buy-tab" md-label="Passer une commande">
+                <myaccount-buy></myaccount-buy>
+            </md-tab>
+            <md-tab id="myaccount-history-tab" md-label="Voir mes commandes">
+                <myaccount-history></myaccount-history>
+            </md-tab>
+            <md-tab id="about-tab" md-label="A propos">
+                <about></about>
+            </md-tab>
+        </md-tabs>
+    </div>
+</script>
 <script type="text/x-template" id="myaccount-me-component">
     <div class="myaccount-me-component">
-
+        ME
     </div>
 </script>
 
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
-
+        PASSER UNE COMMANDE
     </div>
 </script>
 
 <script type="text/x-template" id="myaccount-history-component">
     <div class="myaccount-history-component">
-
+        VOIR L'HISTORIQUE
     </div>
 </script>
 
 <script type="text/x-template" id="about-component">
     <div class="about-component">
-
+        A PROPOS DE
     </div>
 </script>
 
@@ -126,7 +185,24 @@
 
 <script type="text/x-template" id="home-admin-component">
     <div class="home-admin-component">
+        <md-toolbar class="md-dense">
+            <h2 class="md-title" style="flex: 1">Accueil Employé</h2>
+        </md-toolbar>
 
+        <md-card md-with-hover>
+            <md-card-header>
+                <div class="md-title">Qui êtes-vous ?</div>
+            </md-card-header>
+
+            <md-card-content>
+                <router-link to="/delivery">
+                    <md-button class="md-raised md-primary">Je suis un livreur</md-button>
+                </router-link>
+                <router-link to="/manager">
+                    <md-button class="md-raised md-primary">Je suis le gestionnaire</md-button>
+                </router-link>
+            </md-card-content>
+        </md-card>
     </div>
 </script>
 

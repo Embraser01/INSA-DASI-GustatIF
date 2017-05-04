@@ -70,11 +70,42 @@ const Login = {
 };
 
 const Signup = {
-    template: '#signup-component'
+    template: '#signup-component',
+    data: () => {
+        return {
+            form: {
+                name: '',
+                surname: '',
+                address: '',
+                mail: ''
+            }
+        }
+    },
+    methods: {
+        signup() {
+            let formData = new FormData();
+
+            formData.append('name', this.name);
+            formData.append('surname', this.surname);
+            formData.append('address', this.address);
+            formData.append('mail', this.mail);
+
+            this.$http.post(getActionURL('inscription'), formData).then(response => {
+                // TODO SUCCESS SIGNUP
+                // GET DATA FROM response.json().then(data => this.data = data);
+            }, response => {
+                // TODO ERROR SIGNUP
+            });
+        }
+    }
 };
 
 
 ///////// MY ACCOUNT //////////
+
+const MyAccount = {
+    template: '#myaccount-component'
+};
 
 const MyAccountMe = {
     template: '#myaccount-me-component'
@@ -91,6 +122,11 @@ const MyAccountHistory = {
 const About = {
     template: '#about-component'
 };
+
+Vue.component('myaccount-me', MyAccountMe);
+Vue.component('myaccount-buy', MyAccountBuy);
+Vue.component('myaccount-history', MyAccountHistory);
+Vue.component('about', About);
 
 
 ////////// SHOPPING CART //////////////
@@ -153,42 +189,25 @@ const routes = [
         component: Signup
     },
     {
-        path: '/myaccount', redirect: '/myaccount/me',
-        children: [
-            {
-                path: 'me',
-                component: MyAccountMe
-            },
-            {
-                path: 'buy',
-                component: MyAccountBuy
-            },
-            {
-                path: 'history',
-                component: MyAccountHistory
-            },
-            {
-                path: 'about',
-                component: About
-            }
-        ]
+        path: '/myaccount',
+        component: MyAccount
     },
     {
         path: '/cart', component: ShoppingCart
     },
     {
-        path: '/member', component: HomeAdmin,
-        children: [
-            {
-                path: 'manager', component: Manager
-            },
-            {
-                path: 'delivery', component: Delivery
-            }
-        ]
+        path: '/member',
+        component: HomeAdmin
     },
     {
-        path: '/dashboard', component: Dashboard,
+        path: '/manager', component: Manager
+    },
+    {
+        path: '/delivery', component: Delivery
+    },
+    {
+        path: '/dashboard',
+        component: Dashboard,
         children: [
             {
                 path: 'history', component: DeliveryHistory
