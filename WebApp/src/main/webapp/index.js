@@ -89,7 +89,7 @@ const Signup = {
                 name: '',
                 surname: '',
                 address: '',
-                mail: ''
+                email: ''
             }
         }
     },
