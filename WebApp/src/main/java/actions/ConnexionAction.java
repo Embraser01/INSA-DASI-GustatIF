@@ -29,6 +29,7 @@ public class ConnexionAction extends Action {
         if (user == null) {
             throw new ConnectionFailException();
         }
+        session.setAttribute(SESSION_CLIENT_FIELD, user);
         req.setAttribute(RESULTS_FIELD,user);
     }
 }

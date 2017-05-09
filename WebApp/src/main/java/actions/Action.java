@@ -22,7 +22,7 @@ public abstract class Action {
     }
 
     public abstract void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, NotLoggedException, SignUpException, NullAvailableProductException, ClientNullException, ConnectionFailException;
+            throws ServletException, NotLoggedException, SignUpException, NullAvailableProductException, ClientNullException, ConnectionFailException, IncompatibleTypeException;
 
 
     protected boolean isClient(HttpServletRequest req, HttpServletResponse res)
@@ -39,7 +39,7 @@ public abstract class Action {
         if(o instanceof String){
             return (String)o;
         }
-        throw new IncompatibleTypeException();
+        throw new IncompatibleTypeException(attributeName+" is not a String");
     }
 
 }

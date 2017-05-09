@@ -191,6 +191,23 @@
                 <md-button class="md-raised md-primary">Selectionner</md-button>
             </div>
         </form>
+        PASSER UNE COMMANDE
+
+        <md-dialog md-open-from="#fab" md-close-to="#fab" ref="buy-dialog">
+            <md-dialog-title>Choix des plats</md-dialog-title>
+
+            <md-dialog-content>
+                Riz cantonais ...
+                <!-- TODO CDC PAS DE PANIER FINALEMENT -->
+            </md-dialog-content>
+
+            <md-dialog-actions>
+                <md-button class="md-primary" @click.native="closeDialog('buy-dialog')">Revenir au choix des
+                    restaurants
+                </md-button>
+                <md-button class="md-primary" @click.native="closeDialog('buy-dialog')">Valider la commande</md-button>
+            </md-dialog-actions>
+        </md-dialog>
     </div>
 
 </script>
@@ -204,12 +221,6 @@
 <script type="text/x-template" id="about-component">
     <div class="about-component">
         A PROPOS DE
-    </div>
-</script>
-
-<script type="text/x-template" id="shopping-cart-component">
-    <div class="shopping-cart-component">
-
     </div>
 </script>
 
@@ -236,24 +247,34 @@
     </div>
 </script>
 
+<!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
 <script type="text/x-template" id="manager-component">
     <div class="manager-component">
-
     </div>
 </script>
 
+
+<!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
 <script type="text/x-template" id="delivery-component">
     <div class="delivery-component">
-
     </div>
 </script>
 
 <script type="text/x-template" id="dashboard-component">
     <div class="dashboard-component">
+        <md-card md-with-hover>
+            <md-card-header>
+                <div class="md-title">Dashboard</div>
+            </md-card-header>
 
+            <md-card-content>
+                <!-- TODO CHECKBOX OU BOUTON & CARTE -->
+            </md-card-content>
+        </md-card>
     </div>
 </script>
 
+<!-- TODO Panel de recherche de livraisons & Tableau livraisons et cloture d'une livraison -->
 <script type="text/x-template" id="delivery-history-component">
     <div class="delivery-history-component">
 
