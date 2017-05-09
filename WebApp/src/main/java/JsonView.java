@@ -1,9 +1,6 @@
 import actions.Action;
 import com.google.gson.Gson;
-import metier.modele.Client;
-import metier.modele.Livreur;
-import metier.modele.Produit;
-import metier.modele.Restaurant;
+import metier.modele.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,26 +11,26 @@ import java.util.List;
 public class JsonView {
 
 
-    public static void inscription(HttpServletRequest req, HttpServletResponse res) {
+    public static void inscription(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
         // To use results :
         // TODO Set header for json
-        req.getAttribute(Action.RESULTS_FIELD);
+        Client user = (Client)req.getAttribute(Action.RESULTS_FIELD);
+        res.getWriter().print(new Gson().toJson(user));
     }
 
     public static void connexion(HttpServletRequest req, HttpServletResponse res) throws IOException{
         Client user = (Client) req.getAttribute(Action.RESULTS_FIELD);
-
         res.getWriter().print(new Gson().toJson(user));
     }
 
-    public static void majInfoClient(HttpServletRequest req, HttpServletResponse res) {
-
+    public static void majInfoClient(HttpServletRequest req, HttpServletResponse res) throws IOException{
+        Client user = (Client)req.getAttribute(Action.RESULTS_FIELD);
+        res.getWriter().print(new Gson().toJson(user));
     }
 
     public static void restaurantsPartenaires(HttpServletRequest req, HttpServletResponse res) throws IOException {
         List<Restaurant> restaurants = (List<Restaurant>) req.getAttribute(Action.RESULTS_FIELD);
-
         res.getWriter().print(new Gson().toJson(restaurants));
     }
 
@@ -60,10 +57,12 @@ public class JsonView {
 
     public static void cloturerLivraison(HttpServletRequest req, HttpServletResponse res) {
         System.out.println("commande cloture");
+
     }
 
-    public static void rechercherLivraison(HttpServletRequest req, HttpServletResponse res) {
-
+    public static void rechercherLivraison(HttpServletRequest req, HttpServletResponse res) throws IOException{
+        List<Commande> commandes = (List<Commande>)req.getAttribute(Action.RESULTS_FIELD);
+        res.getWriter().print(new Gson().toJson(commandes));
     }
 
     public static void notFound(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {

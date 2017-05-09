@@ -186,7 +186,8 @@ const routes = [
         }
     },
     {
-        path: '/auth', component: HomeApp
+        path: '/auth',
+        component: HomeApp
     },
     {
         path: '/auth/login',
@@ -208,10 +209,12 @@ const routes = [
         component: HomeAdmin    // TODO Component
     },
     {
-        path: '/manager', component: Manager    // TODO Component
+        path: '/manager',  // TODO Component
+        component: Manager
     },
     {
-        path: '/delivery', component: Delivery    // TODO Component
+        path: '/delivery',
+        component: Delivery    // TODO Component
     },
     {
         path: '/dashboard',    // TODO Component
