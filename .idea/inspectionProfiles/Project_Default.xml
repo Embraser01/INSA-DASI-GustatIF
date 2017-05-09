@@ -4,6 +4,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
+          <list size="16">
           <list size="11">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
@@ -16,6 +17,16 @@
             <item index="8" class="java.lang.String" itemvalue="md-icon" />
             <item index="9" class="java.lang.String" itemvalue="md-tabs" />
             <item index="10" class="java.lang.String" itemvalue="router-view" />
+            <item index="6" class="java.lang.String" itemvalue="router-view" />
+            <item index="7" class="java.lang.String" itemvalue="md-toolbar" />
+            <item index="8" class="java.lang.String" itemvalue="md-card" />
+            <item index="9" class="java.lang.String" itemvalue="md-card-header" />
+            <item index="10" class="java.lang.String" itemvalue="md-card-content" />
+            <item index="11" class="java.lang.String" itemvalue="md-button" />
+            <item index="12" class="java.lang.String" itemvalue="router-link" />
+            <item index="13" class="java.lang.String" itemvalue="md-input-container" />
+            <item index="14" class="java.lang.String" itemvalue="md-input" />
+            <item index="15" class="java.lang.String" itemvalue="md-card-actions" />
           </list>
         </value>
       </option>

@@ -4,6 +4,11 @@
 
 const DEBUG_MODE = true;
 const SERVLET_PATH = '/ActionServlet';
+const FORM_CONTENT_TYPE = {
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+};
 
 //
 // UTILS
@@ -18,6 +23,15 @@ function log() {
 
 function getActionURL(action) {
     return SERVLET_PATH + '?action=' + action;
+}
+
+
+function serializeForm(form) {
+    const kvpairs = [];
+
+    Object.keys(form).map(e => kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e])));
+
+    return kvpairs.join("&");
 }
 
 //
@@ -54,16 +68,14 @@ const Login = {
     },
     methods: {
         login() {
-            let formData = new FormData();
 
-            formData.append('mail', this.mail);
-            formData.append('password', this.password);
-
-            this.$http.post(getActionURL('connexion'), formData).then(response => {
+            this.$http.post(getActionURL('connexion'), serializeForm(this.form), FORM_CONTENT_TYPE).then(response => {
                 // TODO SUCCESS LOGIN
                 // GET DATA FROM response.json().then(data => this.data = data);
+                log(response.json());
             }, response => {
                 // TODO ERROR LOGIN
+                log(response.json());
             });
         }
     }
@@ -83,18 +95,14 @@ const Signup = {
     },
     methods: {
         signup() {
-            let formData = new FormData();
 
-            formData.append('name', this.form.name);
-            formData.append('surname', this.form.surname);
-            formData.append('address', this.form.address);
-            formData.append('mail', this.form.mail);
-
-            this.$http.post(getActionURL('inscription'), formData).then(response => {
+            this.$http.post(getActionURL('inscription'), serializeForm(this.form), FORM_CONTENT_TYPE).then(response => {
                 // TODO SUCCESS SIGNUP
                 // GET DATA FROM response.json().then(data => this.data = data);
+                log(response.json());
             }, response => {
                 // TODO ERROR SIGNUP
+                log(response.json());
             });
         }
     }
@@ -191,32 +199,32 @@ const routes = [
     },
     {
         path: '/myaccount',
-        component: MyAccount
+        component: MyAccount    // TODO Component
     },
     {
-        path: '/cart', component: ShoppingCart
+        path: '/cart', component: ShoppingCart    // TODO Component
     },
     {
         path: '/member',
-        component: HomeAdmin
+        component: HomeAdmin    // TODO Component
     },
     {
-        path: '/manager',
+        path: '/manager',  // TODO Component
         component: Manager
     },
     {
         path: '/delivery',
-        component: Delivery
+        component: Delivery    // TODO Component
     },
     {
-        path: '/dashboard',
+        path: '/dashboard',    // TODO Component
         component: Dashboard,
         children: [
             {
-                path: 'history', component: DeliveryHistory
+                path: 'history', component: DeliveryHistory    // TODO Component
             },
             {
-                path: 'close', component: CloseDelivery
+                path: 'close', component: CloseDelivery    // TODO Component
             }
         ]
     }
