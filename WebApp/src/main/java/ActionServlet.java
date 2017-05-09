@@ -95,6 +95,8 @@ public class ActionServlet extends HttpServlet {
             //TODO use JsonView function for reporting errors
 
             JsonView.notFound(req,res,"No products were found. Check requested restaurant");
+        } catch (IncompatibleTypeException e) {
+            JsonView.badRequest(req,res,e.getMessage());
         }
 
 
