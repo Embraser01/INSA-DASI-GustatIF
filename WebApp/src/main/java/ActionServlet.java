@@ -85,18 +85,24 @@ public class ActionServlet extends HttpServlet {
             action.execute(req, res);
         } catch (NotLoggedException e) {
             JsonView.badRequest(req,res,"Login failed");
+            return;
         } catch (SignUpException e){
             JsonView.badRequest(req,res,"SignUp failed");
+            return;
         } catch(ClientNullException e) {
             JsonView.notFound(req,res,"No such client");
+            return;
         } catch(ConnectionFailException e) {
             JsonView.badRequest(req,res,"Connection failed");
+            return;
         } catch ( NullAvailableProductException e){
             //TODO use JsonView function for reporting errors
 
             JsonView.notFound(req,res,"No products were found. Check requested restaurant");
+            return;
         } catch (IncompatibleTypeException e) {
             JsonView.badRequest(req,res,e.getMessage());
+            return;
         }
 
 
