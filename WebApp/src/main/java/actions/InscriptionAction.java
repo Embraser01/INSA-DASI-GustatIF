@@ -33,8 +33,6 @@ public class InscriptionAction extends Action {
         Client user = new Client(name, surname, email, address);
         if (!serviceMetier.inscription(user)) throw new SignUpException();
 
-        HttpSession session = req.getSession(true);
-        session.setAttribute(SESSION_CLIENT_FIELD, user);
         //TODO redirect user ?
         req.setAttribute(RESULTS_FIELD,user);
 
