@@ -17,7 +17,7 @@ const FORM_CONTENT_TYPE = {
 function log() {
     if (!DEBUG_MODE) return;
 
-    return console.log(arguments);
+    return console.log(...arguments);
 }
 
 
@@ -69,14 +69,17 @@ const Login = {
     methods: {
         login() {
 
-            this.$http.post(getActionURL('connexion'), serializeForm(this.form), FORM_CONTENT_TYPE).then(response => {
-                // TODO SUCCESS LOGIN
-                // GET DATA FROM response.json().then(data => this.data = data);
-                log(response.json());
-            }, response => {
-                // TODO ERROR LOGIN
-                log(response.json());
-            });
+            this.$http.post(getActionURL('connexion'), serializeForm(this.form), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(response => {
+                    // TODO SUCCESS LOGIN
+                    // GET DATA FROM response.json().then(data => this.data = data);
+                    log(response.json());
+                })
+                .catch(response => {
+                    // TODO ERROR LOGIN
+                    log(response.json());
+                });
         }
     }
 };
@@ -96,14 +99,17 @@ const Signup = {
     methods: {
         signup() {
 
-            this.$http.post(getActionURL('inscription'), serializeForm(this.form), FORM_CONTENT_TYPE).then(response => {
-                // TODO SUCCESS SIGNUP
-                // GET DATA FROM response.json().then(data => this.data = data);
-                log(response.json());
-            }, response => {
-                // TODO ERROR SIGNUP
-                log(response.json());
-            });
+            this.$http.post(getActionURL('inscription'), serializeForm(this.form), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(response => {
+                    // TODO SUCCESS SIGNUP
+                    // GET DATA FROM response.json().then(data => this.data = data);
+                    log(response.json());
+                })
+                .catch(response => {
+                    // TODO ERROR SIGNUP
+                    log(response.json());
+                });
         }
     }
 };
@@ -116,15 +122,92 @@ const MyAccount = {
 };
 
 const MyAccountMe = {
-    template: '#myaccount-me-component'
+    template: '#myaccount-me-component',
+    data: () => {
+        return {
+            form: {
+                name: '',
+                surname: '',
+                address: '',
+                mail: ''
+            }
+        }
+    },
+    created() {
+        // TODO Load current user
+    },
+    methods: {
+        updateMe() {
+
+            this.$http.post(getActionURL('majInfoClient'), serializeForm(this.form), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(response => {
+                    // TODO SUCCESS MAJ
+                    // GET DATA FROM response.json().then(data => this.data = data);
+                    log(response.json());
+                })
+                .catch(response => {
+                    // TODO ERROR MAJ
+                    log(response.json());
+                });
+        }
+    }
 };
 
 const MyAccountBuy = {
-    template: '#myaccount-buy-component'
+    template: '#myaccount-buy-component',
+    data: () => {
+        return {
+            restaurants: [],
+            selectedRestaurants: []
+        }
+    },
+    created() {
+        this.$http.get(getActionURL("restaurantsPartenaires"))
+            .then(response => response.json())
+            .then(response => {
+                this.restaurants = response;
+            })
+            .catch(response => {
+                // ERROR
+            });
+    }
 };
 
 const MyAccountHistory = {
-    template: '#myaccount-history-component'
+    template: '#myaccount-history-component',
+    data: () => {
+        return {
+            current: [],
+            old: []
+        }
+    },
+    created() {
+
+        this.current = [
+            {
+                dateEnregistrementCommande: Date.now() - 1000 * 60 * 60 * 24,
+                dateLivraisonCommande: Date.now() - 1000 * 60 * 60 * 24,
+                id: 120
+
+            }
+        ];
+
+        this.old = [
+            {
+                dateEnregistrementCommande: Date.now() - 1000 * 60 * 60 * 24,
+                dateLivraisonCommande: Date.now() - 1000 * 60 * 60 * 24,
+                id: 120
+
+            }
+        ]
+
+        // this.$http.get(getActionURL("")).then(response => {
+        //     this.restaurants = response.json();
+        // }, response => {
+        //     // ERROR
+        // });
+    }
 };
 
 const About = {
@@ -135,13 +218,6 @@ Vue.component('myaccount-me', MyAccountMe);
 Vue.component('myaccount-buy', MyAccountBuy);
 Vue.component('myaccount-history', MyAccountHistory);
 Vue.component('about', About);
-
-
-////////// SHOPPING CART //////////////
-
-const ShoppingCart = {
-    template: '#shopping-cart-component'
-};
 
 
 ////////// ADMINISTRATION //////////////
@@ -199,32 +275,29 @@ const routes = [
     },
     {
         path: '/myaccount',
-        component: MyAccount    // TODO Component
-    },
-    {
-        path: '/cart', component: ShoppingCart    // TODO Component
+        component: MyAccount
     },
     {
         path: '/member',
-        component: HomeAdmin    // TODO Component
+        component: HomeAdmin
     },
     {
-        path: '/manager',  // TODO Component
+        path: '/manager',
         component: Manager
     },
     {
         path: '/delivery',
-        component: Delivery    // TODO Component
+        component: Delivery
     },
     {
-        path: '/dashboard',    // TODO Component
+        path: '/dashboard',
         component: Dashboard,
         children: [
             {
-                path: 'history', component: DeliveryHistory    // TODO Component
+                path: 'history', component: DeliveryHistory
             },
             {
-                path: 'close', component: CloseDelivery    // TODO Component
+                path: 'close', component: CloseDelivery
             }
         ]
     }

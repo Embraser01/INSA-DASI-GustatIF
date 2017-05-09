@@ -76,6 +76,9 @@ public class ActionServlet extends HttpServlet {
             case "rechercherLivraison":
                 action = new RechercherLivraisonAction(serviceMetier);
                 break;
+            case "deconnexion":
+                action = new DeconnexionAction(serviceMetier);
+                break;
             default:
                 JsonView.notFound(req, res, "Unknown action !");
                 return;
@@ -84,17 +87,17 @@ public class ActionServlet extends HttpServlet {
         try {
             action.execute(req, res);
         } catch (NotLoggedException e) {
-            JsonView.badRequest(req,res,"Login failed");
-        } catch (SignUpException e){
-            JsonView.badRequest(req,res,"SignUp failed");
-        } catch(ClientNullException e) {
-            JsonView.notFound(req,res,"No such client");
-        } catch(ConnectionFailException e) {
-            JsonView.badRequest(req,res,"Connection failed");
-        } catch ( NullAvailableProductException e){
+            JsonView.badRequest(req, res, "Login failed");
+        } catch (SignUpException e) {
+            JsonView.badRequest(req, res, "SignUp failed");
+        } catch (ClientNullException e) {
+            JsonView.notFound(req, res, "No such client");
+        } catch (ConnectionFailException e) {
+            JsonView.badRequest(req, res, "Connection failed");
+        } catch (NullAvailableProductException e) {
             //TODO use JsonView function for reporting errors
 
-            JsonView.notFound(req,res,"No products were found. Check requested restaurant");
+            JsonView.notFound(req, res, "No products were found. Check requested restaurant");
         }
 
 
@@ -129,6 +132,9 @@ public class ActionServlet extends HttpServlet {
                 break;
             case "rechercherLivraison":
                 JsonView.rechercherLivraison(req, res);
+                break;
+            case "deconnexion":
+                JsonView.ok(req, res, "Vous avez bien été déconnecté(e)");
                 break;
         }
     }

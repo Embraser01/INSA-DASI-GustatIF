@@ -155,13 +155,62 @@
 </script>
 <script type="text/x-template" id="myaccount-me-component">
     <div class="myaccount-me-component">
-        ME
+        <form @submit.stop.prevent="updateMe">
+            <md-card md-with-hover>
+                <md-card-header>
+                    <div class="md-title">Mettre à jour ses données</div>
+                </md-card-header>
+
+                <md-card-content>
+
+                    <md-input-container>
+                        <label>Nom</label>
+                        <md-input required v-model="form.name"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Prénom</label>
+                        <md-input required v-model="form.surname"></md-input>
+                    </md-input-container>
+                    <br>
+                    <md-input-container>
+                        <label>Adresse</label>
+                        <md-input required v-model="form.address"></md-input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Mail</label>
+                        <md-input required type="email" v-model="form.email"></md-input>
+                    </md-input-container>
+
+                    <!-- TODO ERROR MESSAGE -->
+                </md-card-content>
+                <md-card-actions>
+                    <md-button type="submit">Valider</md-button>
+                </md-card-actions>
+
+            </md-card>
+        </form>
     </div>
 </script>
 
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
         PASSER UNE COMMANDE
+
+        <md-dialog md-open-from="#fab" md-close-to="#fab" ref="buy-dialog">
+            <md-dialog-title>Choix des plats</md-dialog-title>
+
+            <md-dialog-content>
+                Riz cantonais ...
+                <!-- TODO CDC PAS DE PANIER FINALEMENT -->
+            </md-dialog-content>
+
+            <md-dialog-actions>
+                <md-button class="md-primary" @click.native="closeDialog('buy-dialog')">Revenir au choix des
+                    restaurants
+                </md-button>
+                <md-button class="md-primary" @click.native="closeDialog('buy-dialog')">Valider la commande</md-button>
+            </md-dialog-actions>
+        </md-dialog>
     </div>
 </script>
 
@@ -174,12 +223,6 @@
 <script type="text/x-template" id="about-component">
     <div class="about-component">
         A PROPOS DE
-    </div>
-</script>
-
-<script type="text/x-template" id="shopping-cart-component">
-    <div class="shopping-cart-component">
-
     </div>
 </script>
 
@@ -208,31 +251,33 @@
 
 <script type="text/x-template" id="manager-component">
     <div class="manager-component">
-
+        <!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
     </div>
 </script>
 
 <script type="text/x-template" id="delivery-component">
     <div class="delivery-component">
-
+        <!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
     </div>
 </script>
 
 <script type="text/x-template" id="dashboard-component">
     <div class="dashboard-component">
+        <md-card md-with-hover>
+            <md-card-header>
+                <div class="md-title">Dashboard</div>
+            </md-card-header>
 
+            <md-card-content>
+                <!-- TODO CHECKBOX OU BOUTON & CARTE -->
+            </md-card-content>
+        </md-card>
     </div>
 </script>
 
 <script type="text/x-template" id="delivery-history-component">
     <div class="delivery-history-component">
-
-    </div>
-</script>
-
-<script type="text/x-template" id="close-delivery-component">
-    <div class="close-delivery-component">
-
+        <!-- TODO Panel de recherche de livraisons & Tableau livraisons et cloture d'une livraison -->
     </div>
 </script>
 
