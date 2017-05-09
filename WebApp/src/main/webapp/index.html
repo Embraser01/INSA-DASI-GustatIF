@@ -51,6 +51,9 @@
                 <router-link to="/auth/login">
                     <md-button class="md-raised md-primary">S'identifier</md-button>
                 </router-link>
+                <router-link to="/myaccount">
+                    <md-button class="md-raised md-primary">to page buy</md-button>
+                </router-link>
             </md-card-content>
         </md-card>
     </div>
@@ -163,45 +166,39 @@
 </script>
 <script type="text/x-template" id="myaccount-me-component">
     <div class="myaccount-me-component">
-        <form @submit.stop.prevent="updateMe">
-            <md-card md-with-hover>
-                <md-card-header>
-                    <div class="md-title">Mettre à jour ses données</div>
-                </md-card-header>
-
-                <md-card-content>
-
-                    <md-input-container>
-                        <label>Nom</label>
-                        <md-input required v-model="form.name"></md-input>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Prénom</label>
-                        <md-input required v-model="form.surname"></md-input>
-                    </md-input-container>
-                    <br>
-                    <md-input-container>
-                        <label>Adresse</label>
-                        <md-input required v-model="form.address"></md-input>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Mail</label>
-                        <md-input required type="email" v-model="form.email"></md-input>
-                    </md-input-container>
-
-                    <!-- TODO ERROR MESSAGE -->
-                </md-card-content>
-                <md-card-actions>
-                    <md-button type="submit">Valider</md-button>
-                </md-card-actions>
-
-            </md-card>
-        </form>
+        ME
     </div>
 </script>
 
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
+        <form @submit.stop.prevent="buy">
+            <div>
+                <md-table v_once>
+                    <md-table-header>
+                        <md-table-row>
+                            <md-table-head ></md-table-head>
+                            <md-table-head >Restaurant</md-table-head>
+                            <md-table-head >Description</md-table-head>
+
+                        </md-table-row>
+                    </md-table-header>
+                    <md-table-body>
+                        <md-table-row v-for="(row, rowIndex) in restaurants" :key="rowIndex" >
+                            <md-radio v-model="selected" :md-value="row"></md-radio>
+                            <md-table-cell>
+                                {{ row.denomination }}
+                            </md-table-cell>
+                            <md-table-cell>
+                                {{ row.description }}
+                            </md-table-cell>
+                        </md-table-row>
+
+                    </md-table-body>
+                </md-table>
+                <md-button class="md-raised md-primary">Selectionner</md-button>
+            </div>
+        </form>
         PASSER UNE COMMANDE
 
         <md-dialog md-open-from="#fab" md-close-to="#fab" ref="buy-dialog">
@@ -220,6 +217,7 @@
             </md-dialog-actions>
         </md-dialog>
     </div>
+
 </script>
 
 <script type="text/x-template" id="myaccount-history-component">
@@ -257,15 +255,16 @@
     </div>
 </script>
 
+<!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
 <script type="text/x-template" id="manager-component">
     <div class="manager-component">
-        <!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
     </div>
 </script>
 
+
+<!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
 <script type="text/x-template" id="delivery-component">
     <div class="delivery-component">
-        <!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
     </div>
 </script>
 
@@ -283,9 +282,16 @@
     </div>
 </script>
 
+<!-- TODO Panel de recherche de livraisons & Tableau livraisons et cloture d'une livraison -->
 <script type="text/x-template" id="delivery-history-component">
     <div class="delivery-history-component">
-        <!-- TODO Panel de recherche de livraisons & Tableau livraisons et cloture d'une livraison -->
+
+    </div>
+</script>
+
+<script type="text/x-template" id="close-delivery-component">
+    <div class="close-delivery-component">
+
     </div>
 </script>
 

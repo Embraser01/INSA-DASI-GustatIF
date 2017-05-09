@@ -28,8 +28,6 @@ public class InscriptionAction extends Action {
         Client user = new Client(name, surname, email, address);
         if (!serviceMetier.inscription(user)) throw new SignUpException();
 
-        //TODO redirect user ?
         req.setAttribute(RESULTS_FIELD,user);
-
     }
 }
