@@ -76,6 +76,9 @@ public class ActionServlet extends HttpServlet {
             case "rechercherLivraison":
                 action = new RechercherLivraisonAction(serviceMetier);
                 break;
+            case "deconnexion":
+                action = new DeconnexionAction(serviceMetier);
+                break;
             default:
                 JsonView.notFound(req, res, "Unknown action !");
                 return;
@@ -137,6 +140,9 @@ public class ActionServlet extends HttpServlet {
                 break;
             case "rechercherLivraison":
                 JsonView.rechercherLivraison(req, res);
+                break;
+            case "deconnexion":
+                JsonView.ok(req, res, "Vous avez bien été déconnecté(e)");
                 break;
         }
     }
