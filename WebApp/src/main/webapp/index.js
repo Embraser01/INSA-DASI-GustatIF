@@ -275,32 +275,29 @@ const routes = [
     },
     {
         path: '/myaccount',
-        component: MyAccount    // TODO Component
-    },
-    {
-        path: '/cart', component: ShoppingCart    // TODO Component
+        component: MyAccount
     },
     {
         path: '/member',
-        component: HomeAdmin    // TODO Component
+        component: HomeAdmin
     },
     {
-        path: '/manager',  // TODO Component
+        path: '/manager',
         component: Manager
     },
     {
         path: '/delivery',
-        component: Delivery    // TODO Component
+        component: Delivery
     },
     {
-        path: '/dashboard',    // TODO Component
+        path: '/dashboard',
         component: Dashboard,
         children: [
             {
-                path: 'history', component: DeliveryHistory    // TODO Component
+                path: 'history', component: DeliveryHistory
             },
             {
-                path: 'close', component: CloseDelivery    // TODO Component
+                path: 'close', component: CloseDelivery
             }
         ]
     }
