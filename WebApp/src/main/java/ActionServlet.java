@@ -82,7 +82,9 @@ public class ActionServlet extends HttpServlet {
 
         try {
             action.execute(req, res);
-        } catch (NotLoggedException | SignUpException e) {
+        }catch (IncompatibleTypeException e){
+            res.sendError(400,"Wrong atttribute type");
+        }catch (NotLoggedException | SignUpException e) {
             // TODO SEND RESPONSE
         } catch(ClientNullException e) {
 
