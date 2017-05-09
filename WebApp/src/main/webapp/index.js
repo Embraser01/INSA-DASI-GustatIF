@@ -120,7 +120,21 @@ const MyAccountMe = {
 };
 
 const MyAccountBuy = {
-    template: '#myaccount-buy-component'
+    template: '#myaccount-buy-component',
+    data:()=>{
+        return{
+            restaurants: [],
+            selected:{}
+        }
+    },
+    created(){
+        this.$http.get(getActionURL("restaurantsPartenaires")).then(response=>response.json()).then(response => {
+            this.restaurants=response;
+            log(response);
+        },response=>{
+            //error
+        });
+    }
 };
 
 const MyAccountHistory = {

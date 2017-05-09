@@ -51,6 +51,9 @@
                 <router-link to="/auth/login">
                     <md-button class="md-raised md-primary">S'identifier</md-button>
                 </router-link>
+                <router-link to="/myaccount">
+                    <md-button class="md-raised md-primary">to page buy</md-button>
+                </router-link>
             </md-card-content>
         </md-card>
     </div>
@@ -161,8 +164,35 @@
 
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
-        PASSER UNE COMMANDE
+        <form @submit.stop.prevent="buy">
+            <div>
+                <md-table v_once>
+                    <md-table-header>
+                        <md-table-row>
+                            <md-table-head ></md-table-head>
+                            <md-table-head >Restaurant</md-table-head>
+                            <md-table-head >Description</md-table-head>
+
+                        </md-table-row>
+                    </md-table-header>
+                    <md-table-body>
+                        <md-table-row v-for="(row, rowIndex) in restaurants" :key="rowIndex" >
+                            <md-radio v-model="selected" :md-value="row"></md-radio>
+                            <md-table-cell>
+                                {{ row.denomination }}
+                            </md-table-cell>
+                            <md-table-cell>
+                                {{ row.description }}
+                            </md-table-cell>
+                        </md-table-row>
+
+                    </md-table-body>
+                </md-table>
+                <md-button class="md-raised md-primary">Selectionner</md-button>
+            </div>
+        </form>
     </div>
+
 </script>
 
 <script type="text/x-template" id="myaccount-history-component">
