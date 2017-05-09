@@ -34,4 +34,11 @@ public abstract class Action {
 
         return user != null;
     }
+    protected String attributeString(String attributeName, HttpServletRequest req) throws IncompatibleTypeException {
+        Object o = req.getAttribute(attributeName);
+        if(o instanceof String){
+            return (String)o;
+        }
+        throw new IncompatibleTypeException();
+    }
 }
