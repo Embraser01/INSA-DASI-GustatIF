@@ -38,5 +38,9 @@
     <orderEntry type="library" name="vue-material" level="application" />
     <orderEntry type="library" name="vue-router" level="application" />
     <orderEntry type="library" name="vue-resource" level="application" />
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="vue-material" level="application" />
+    <orderEntry type="library" name="vue-router" level="application" />
+    <orderEntry type="library" name="vue-resource" level="application" />
   </component>
 </module>
