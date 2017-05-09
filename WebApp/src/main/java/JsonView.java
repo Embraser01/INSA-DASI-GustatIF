@@ -67,16 +67,16 @@ public class JsonView {
 
     public static void notFound(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(404);
-        res.getWriter().print("{error: 'Not Found : "+ msg + "'}");
+        res.getWriter().print("{'error': 'Not Found : "+ msg + "'}");
     }
 
     public static void forbidden(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(403);
-        res.getWriter().print("{error: 'Forbidden : "+ msg + "'}");
+        res.getWriter().print("{'error': 'Forbidden : "+ msg + "'}");
     }
 
     public static void badRequest(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(400);
-        res.getWriter().print("{error: 'Bad Request : "+ msg + "'}");
+        res.getWriter().print("{'error': 'Bad Request : "+ msg + "'}");
     }
 }
