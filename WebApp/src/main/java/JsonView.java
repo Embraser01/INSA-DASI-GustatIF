@@ -14,11 +14,12 @@ import java.util.List;
 public class JsonView {
 
 
-    public static void inscription(HttpServletRequest req, HttpServletResponse res) {
+    public static void inscription(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
         // To use results :
         // TODO Set header for json
-        req.getAttribute(Action.RESULTS_FIELD);
+        Client user = (Client)req.getAttribute(Action.RESULTS_FIELD);
+        res.getWriter().print(new Gson().toJson(user));
     }
 
     public static void connexion(HttpServletRequest req, HttpServletResponse res) throws IOException{

@@ -34,6 +34,7 @@ public class InscriptionAction extends Action {
         HttpSession session = req.getSession(true);
         session.setAttribute(SESSION_CLIENT_FIELD, user);
         //TODO redirect user ?
+        req.setAttribute(RESULTS_FIELD,user);
 
     }
 }
