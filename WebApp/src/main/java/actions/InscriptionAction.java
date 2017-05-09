@@ -1,6 +1,7 @@
 package actions;
 
 import com.google.gson.Gson;
+import exception.IncompatibleTypeException;
 import exception.SignUpException;
 import metier.modele.Client;
 import metier.modele.Produit;
@@ -21,12 +22,13 @@ public class InscriptionAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, SignUpException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, SignUpException, IncompatibleTypeException {
 
-        String name = (String) req.getAttribute("name");
-        String surname = (String) req.getAttribute("surname");
-        String email = (String) req.getAttribute("email");
-        String address = (String) req.getAttribute("address");
+        String name = attributeString("name",req);
+        String surname = attributeString("surname",req);
+        String email = attributeString("email",req);
+        String address = attributeString("address",req);
+
 
         Client user = new Client(name, surname, email, address);
         if (!serviceMetier.inscription(user)) throw new SignUpException();
