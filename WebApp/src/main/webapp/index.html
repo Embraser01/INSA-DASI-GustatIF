@@ -124,6 +124,14 @@
                 </md-card-actions>
 
             </md-card>
+            <md-snackbar ref="snackbarSuccess">
+                <span>Sign up successful, you will be redirected soon.</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close</md-button>
+            </md-snackbar>
+            <md-snackbar ref="snackbarFail">
+                <span>Unable to create account</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close</md-button>
+            </md-snackbar>
         </form>
     </div>
 </script>
