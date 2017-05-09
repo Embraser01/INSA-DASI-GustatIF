@@ -74,11 +74,11 @@ const Login = {
                 .then(response => {
                     // TODO SUCCESS LOGIN
                     // GET DATA FROM response.json().then(data => this.data = data);
-                    log(response.json());
+                    log(response);
                 })
                 .catch(response => {
                     // TODO ERROR LOGIN
-                    log(response.json());
+                    log(response);
                 });
         }
     }
@@ -104,11 +104,11 @@ const Signup = {
                 .then(response => {
                     // TODO SUCCESS SIGNUP
                     // GET DATA FROM response.json().then(data => this.data = data);
-                    log(response.json());
+                    log(response);
                 })
                 .catch(response => {
                     // TODO ERROR SIGNUP
-                    log(response.json());
+                    log(response);
                 });
         }
     }
@@ -144,11 +144,11 @@ const MyAccountMe = {
                 .then(response => {
                     // TODO SUCCESS MAJ
                     // GET DATA FROM response.json().then(data => this.data = data);
-                    log(response.json());
+                    log(response);
                 })
                 .catch(response => {
                     // TODO ERROR MAJ
-                    log(response.json());
+                    log(response);
                 });
         }
     }
