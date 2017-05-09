@@ -39,7 +39,7 @@ public abstract class Action {
         if(o instanceof String){
             return (String)o;
         }
-        throw new IncompatibleTypeException();
+        throw new IncompatibleTypeException(attributeName+" is not a String");
     }
 
 }
