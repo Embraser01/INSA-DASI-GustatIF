@@ -24,15 +24,18 @@ public class InscriptionAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, SignUpException {
 
         String name = (String) req.getAttribute("name");
+
         String surname = (String) req.getAttribute("surname");
         String email = (String) req.getAttribute("email");
         String address = (String) req.getAttribute("address");
+
 
         Client user = new Client(name, surname, email, address);
         if (!serviceMetier.inscription(user)) throw new SignUpException();
 
         HttpSession session = req.getSession(true);
         session.setAttribute(SESSION_CLIENT_FIELD, user);
+
         //TODO redirect user ?
         req.setAttribute(RESULTS_FIELD,user);
 

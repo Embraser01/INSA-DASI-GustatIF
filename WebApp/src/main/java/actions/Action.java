@@ -41,4 +41,5 @@ public abstract class Action {
         }
         throw new IncompatibleTypeException();
     }
+
 }

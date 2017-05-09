@@ -18,7 +18,7 @@ public class MajInfoClientAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, NotLoggedException {
+            throws ServletException, NotLoggedException{
 
         if (!isClient(req, res)) throw new NotLoggedException();
 
@@ -26,9 +26,10 @@ public class MajInfoClientAction extends Action {
 
         // FIXME Escape HTML
 
-        client.setNom(req.getParameter("lastName"));
-        client.setPrenom(req.getParameter("firstName"));
-        client.setMail(req.getParameter("mail"));
+            client.setNom(req.getParameter("lastName"));
+            client.setPrenom(req.getParameter("firstName"));
+            client.setMail(req.getParameter("mail"));
+
 
         this.serviceMetier.majInfoClient(client);
     }
