@@ -104,11 +104,15 @@ const Signup = {
                 .then(response => {
                     // TODO SUCCESS SIGNUP
                     // GET DATA FROM response.json().then(data => this.data = data);
-                    log(response.json());
+                    log(response);
+                    this.$refs.snackbarSuccess.open();
+                    setTimeout(() => router.push('login'), 4000);
+
                 })
                 .catch(response => {
                     // TODO ERROR SIGNUP
                     log(response.json());
+                    this.$refs.snackbarFail.open();
                 });
         }
     }
