@@ -85,10 +85,10 @@ const Signup = {
         signup() {
             let formData = new FormData();
 
-            formData.append('name', this.name);
-            formData.append('surname', this.surname);
-            formData.append('address', this.address);
-            formData.append('mail', this.mail);
+            formData.append('name', this.form.name);
+            formData.append('surname', this.form.surname);
+            formData.append('address', this.form.address);
+            formData.append('mail', this.form.mail);
 
             this.$http.post(getActionURL('inscription'), formData).then(response => {
                 // TODO SUCCESS SIGNUP
@@ -178,7 +178,8 @@ const routes = [
         }
     },
     {
-        path: '/auth', component: HomeApp
+        path: '/auth',
+        component: HomeApp
     },
     {
         path: '/auth/login',
@@ -200,10 +201,12 @@ const routes = [
         component: HomeAdmin
     },
     {
-        path: '/manager', component: Manager
+        path: '/manager',
+        component: Manager
     },
     {
-        path: '/delivery', component: Delivery
+        path: '/delivery',
+        component: Delivery
     },
     {
         path: '/dashboard',

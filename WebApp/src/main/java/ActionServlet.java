@@ -11,6 +11,7 @@ import java.io.IOException;
 
 /**
  * "C:\Program Files\Java\jdk1.8.0_77\db\bin\startNetworkServer" -noSecurityManager
+ * E:\jdk\db\bin\startNetworkServer
  */
 public class ActionServlet extends HttpServlet {
 
@@ -82,18 +83,18 @@ public class ActionServlet extends HttpServlet {
 
         try {
             action.execute(req, res);
-        }catch (IncompatibleTypeException e){
-            res.sendError(400,"Wrong atttribute type");
-        }catch (NotLoggedException | SignUpException e) {
-            // TODO SEND RESPONSE
+        } catch (NotLoggedException e) {
+            JsonView.badRequest(req,res,"Login failed");
+        } catch (SignUpException e){
+            JsonView.badRequest(req,res,"SignUp failed");
         } catch(ClientNullException e) {
-
+            JsonView.notFound(req,res,"No such client");
         } catch(ConnectionFailException e) {
-
+            JsonView.badRequest(req,res,"Connection failed");
         } catch ( NullAvailableProductException e){
             //TODO use JsonView function for reporting errors
 
-            res.sendError(400,"No products were found. Check requested restaurant");
+            JsonView.notFound(req,res,"No products were found. Check requested restaurant");
         }
 
 
