@@ -29,9 +29,9 @@
 
 <!------- COMPONENTS -------->
 
-<!--------------------->
-<!------- CARD -------->
-<!--------------------->
+<!------------------------->
+<!------- HOME APP -------->
+<!------------------------->
 
 <script type="text/x-template" id="home-app-component">
     <div class="home-app-component">
@@ -58,6 +58,11 @@
         </md-card>
     </div>
 </script>
+
+
+<!---------------------->
+<!------- LOGIN -------->
+<!---------------------->
 
 <script type="text/x-template" id="login-component">
     <div class="login-component">
@@ -91,6 +96,11 @@
         </form>
     </div>
 </script>
+
+
+<!----------------------->
+<!------- SIGNUP -------->
+<!----------------------->
 
 <script type="text/x-template" id="signup-component">
     <div class="signup-component">
@@ -129,22 +139,29 @@
             </md-card>
             <md-snackbar ref="snackbarSuccess">
                 <span>Sign up successful, you will be redirected soon.</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close</md-button>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close
+                </md-button>
             </md-snackbar>
             <md-snackbar ref="snackbarFail">
                 <span>Unable to create account</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close</md-button>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close
+                </md-button>
             </md-snackbar>
         </form>
     </div>
 </script>
+
+
+<!--------------------------->
+<!------- MY ACCOUNT -------->
+<!--------------------------->
 
 <script type="text/x-template" id="myaccount-component">
     <div class="myaccount-component">
         <md-toolbar class="md-dense">
             <h2 class="md-title" style="flex: 1">Mon Compte</h2>
 
-            <md-button class="md-icon-button">
+            <md-button class="md-icon-button" @click.native="logout()">
                 <md-icon>power_settings_new</md-icon>
             </md-button>
         </md-toolbar>
@@ -170,6 +187,11 @@
     </div>
 </script>
 
+
+<!--------------------------------->
+<!------- MY ACCOUNT - BUY -------->
+<!--------------------------------->
+
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
         <form @submit.stop.prevent="buy">
@@ -177,14 +199,14 @@
                 <md-table v_once>
                     <md-table-header>
                         <md-table-row>
-                            <md-table-head ></md-table-head>
-                            <md-table-head >Restaurant</md-table-head>
-                            <md-table-head >Description</md-table-head>
+                            <md-table-head></md-table-head>
+                            <md-table-head>Restaurant</md-table-head>
+                            <md-table-head>Description</md-table-head>
 
                         </md-table-row>
                     </md-table-header>
                     <md-table-body>
-                        <md-table-row v-for="(row, rowIndex) in restaurants" :key="rowIndex" >
+                        <md-table-row v-for="(row, rowIndex) in restaurants" :key="rowIndex">
                             <md-radio v-model="selected" :md-value="row"></md-radio>
                             <md-table-cell>
                                 {{ row.denomination }}
@@ -220,17 +242,31 @@
 
 </script>
 
+
+<!------------------------------------->
+<!------- MY ACCOUNT - HISTORY -------->
+<!------------------------------------->
+
 <script type="text/x-template" id="myaccount-history-component">
     <div class="myaccount-history-component">
         VOIR L'HISTORIQUE
     </div>
 </script>
 
+<!----------------------------------->
+<!------- MY ACCOUNT - ABOUT -------->
+<!----------------------------------->
+
 <script type="text/x-template" id="about-component">
     <div class="about-component">
         A PROPOS DE
     </div>
 </script>
+
+
+<!--------------------------->
+<!------- HOME ADMIN -------->
+<!--------------------------->
 
 <script type="text/x-template" id="home-admin-component">
     <div class="home-admin-component">
@@ -255,6 +291,11 @@
     </div>
 </script>
 
+
+<!------------------------>
+<!------- MANAGER -------->
+<!------------------------>
+
 <!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
 <script type="text/x-template" id="manager-component">
     <div class="manager-component">
@@ -262,11 +303,20 @@
 </script>
 
 
+<!------------------------->
+<!------- DELIVERY -------->
+<!------------------------->
+
 <!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
 <script type="text/x-template" id="delivery-component">
     <div class="delivery-component">
     </div>
 </script>
+
+
+<!-------------------------->
+<!------- DASHBOARD -------->
+<!-------------------------->
 
 <script type="text/x-template" id="dashboard-component">
     <div class="dashboard-component">
@@ -282,12 +332,22 @@
     </div>
 </script>
 
+
+<!--------------------------------->
+<!------- DELIVERY HISTORY -------->
+<!--------------------------------->
+
 <!-- TODO Panel de recherche de livraisons & Tableau livraisons et cloture d'une livraison -->
 <script type="text/x-template" id="delivery-history-component">
     <div class="delivery-history-component">
 
     </div>
 </script>
+
+
+<!------------------------------->
+<!------- DELIVERY CLOSE -------->
+<!------------------------------->
 
 <script type="text/x-template" id="close-delivery-component">
     <div class="close-delivery-component">

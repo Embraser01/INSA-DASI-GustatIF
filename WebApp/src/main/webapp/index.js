@@ -29,7 +29,9 @@ function getActionURL(action) {
 function serializeForm(form) {
     const kvpairs = [];
 
-    Object.keys(form).map(e => kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e])));
+    Object.keys(form).map(e => {
+        if (typeof form[e] === "string") kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e]))
+    });
 
     return kvpairs.join("&");
 }
@@ -52,6 +54,40 @@ Vue.use(VueResource);
 
 ///////// AUTH //////////
 
+class AuthService {
+    constructor() {
+        this.user = null;
+    }
+
+    isLogged() {
+        return Boolean(this.user);
+    }
+
+
+    signup(form) {
+        return Vue.http.post(getActionURL('inscription'), serializeForm(form), FORM_CONTENT_TYPE)
+            .then(response => response.json());
+    }
+
+    login(form) {
+        return Vue.http.post(getActionURL('connexion'), serializeForm(form), FORM_CONTENT_TYPE)
+            .then(response => response.json())
+            .then(res => {
+                return this.user = res;
+            });
+    }
+
+    logout() {
+        return Vue.http.post(getActionURL('deconnexion')).then(res => {
+            this.user = null;
+            return res;
+        });
+    }
+}
+
+const authService = new AuthService();
+
+
 const HomeApp = {
     template: '#home-app-component'
 };
@@ -68,17 +104,14 @@ const Login = {
     },
     methods: {
         login() {
-
-            this.$http.post(getActionURL('connexion'), serializeForm(this.form), FORM_CONTENT_TYPE)
-                .then(response => response.json())
-                .then(response => {
-                    // TODO SUCCESS LOGIN
-                    // GET DATA FROM response.json().then(data => this.data = data);
-                    log(response);
+            authService.login(this.form)
+                .then(user => {
+                    log(user);
+                    router.push('/');
                 })
-                .catch(response => {
+                .catch(error => {
                     // TODO ERROR LOGIN
-                    log(response);
+                    log(error);
                 });
         }
     }
@@ -98,9 +131,7 @@ const Signup = {
     },
     methods: {
         signup() {
-
-            this.$http.post(getActionURL('inscription'), serializeForm(this.form), FORM_CONTENT_TYPE)
-                .then(response => response.json())
+            authService.signup(this.form)
                 .then(response => {
                     // TODO SUCCESS SIGNUP
                     // GET DATA FROM response.json().then(data => this.data = data);
@@ -122,7 +153,16 @@ const Signup = {
 ///////// MY ACCOUNT //////////
 
 const MyAccount = {
-    template: '#myaccount-component'
+    template: '#myaccount-component',
+    methods: {
+        logout() {
+            log("WHY");
+            authService.logout().then(() => {
+                router.push('/');
+            });
+            // TODO ERROR HANDLING
+        }
+    }
 };
 
 const MyAccountMe = {
@@ -163,7 +203,7 @@ const MyAccountBuy = {
     data: () => {
         return {
             restaurants: [],
-            selectedRestaurants: []
+            selected: []
         }
     },
     created() {
@@ -261,8 +301,7 @@ const routes = [
     {
         path: '/',
         beforeEnter: (to, from, next) => {
-            // TODO Check if connected
-            router.replace('/auth');
+            router.replace(authService.isLogged() ? '/myaccount' : '/auth');
         }
     },
     {
@@ -313,6 +352,26 @@ const routes = [
 
 const router = new VueRouter({
     routes // short for routes: routes
+});
+
+const whitelist = [
+    '/auth',
+    '/auth/login',
+    '/auth/signup',
+    '/',
+
+    '/member',
+    '/manager',
+    '/delivery',
+    '/dashboard',
+    '/dashboard/history',
+    '/dashboard/close'
+];
+
+router.beforeEach((to, from, next) => {
+    // When not connected, only allow certain routes
+    if (authService.isLogged() || whitelist.indexOf(to.path) > -1) return next();
+    return next('/');
 });
 
 
