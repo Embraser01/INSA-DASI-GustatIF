@@ -67,21 +67,26 @@ public class JsonView {
 
     public static void notFound(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(404);
-        res.getWriter().print("{'msg': 'Not Found : "+ msg + "'}");
+        res.getWriter().print("{\"msg\": \"Not Found : "+ msg + "\"}");
     }
 
     public static void forbidden(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(403);
-        res.getWriter().print("{'msg': 'Forbidden : "+ msg + "'}");
+        res.getWriter().print("{\"msg\": \"Forbidden : "+ msg + "\"}");
     }
 
     public static void badRequest(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(400);
-        res.getWriter().print("{'msg': 'Bad Request : "+ msg + "'}");
+        res.getWriter().print("{\"msg\": \"Bad Request : "+ msg + "\"}");
     }
 
     public static void ok(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
         res.setStatus(200);
-        res.getWriter().print("{'msg': 'Ok : "+ msg + "'}");
+        res.getWriter().print("{\"msg\": \"Ok : "+ msg + "\"}");
+    }
+
+    public static void serverError(HttpServletRequest req, HttpServletResponse res, String msg) throws IOException {
+        res.setStatus(500);
+        res.getWriter().print("{\"msg\": \"Server Error : "+ msg + "\"}");
     }
 }

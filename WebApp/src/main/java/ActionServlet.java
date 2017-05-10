@@ -103,6 +103,8 @@ public class ActionServlet extends HttpServlet {
             JsonView.badRequest(req, res, e.getMessage());
         } catch (MissingInformationException e) {
             JsonView.badRequest(req, res, "Request is missing some data");
+        } catch (InfoClientUpdateException e) {
+            JsonView.serverError(req, res, "Try again later");
         }
 
         if (!executed) return;

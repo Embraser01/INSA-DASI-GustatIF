@@ -62,10 +62,12 @@ class UserService {
         this.user = null;
 
         if (DEBUG_MODE) {
-            Vue.http.post(getActionURL('connexion'), serializeForm({
+            this.login({
                 email: 'romain.mie@free.fr',
                 password: 138
-            }), FORM_CONTENT_TYPE);
+            }).then(() => {
+                router.push('/');
+            });
         }
     }
 
@@ -216,11 +218,13 @@ const MyAccountMe = {
                     // TODO SUCCESS UPDATE
                     // GET DATA FROM response.json().then(data => this.data = data);
                     log(response);
+                    this.$refs.snackbarSuccess.open();
 
                 })
                 .catch(response => {
                     // TODO ERROR UPDATE
                     log(response.json());
+                    this.$refs.snackbarFail.open();
                 });
         }
     }
