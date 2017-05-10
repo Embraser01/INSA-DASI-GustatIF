@@ -76,7 +76,7 @@
 
                     <md-input-container>
                         <label>Mail</label>
-                        <md-input required type="email" v-model="form.mail"></md-input>
+                        <md-input required type="email" v-model="form.email"></md-input>
                         <span class="md-error">Vous devez entrer un mail valide</span>
                     </md-input-container>
 
@@ -129,8 +129,6 @@
                         <label>Mail</label>
                         <md-input required type="email" v-model="form.email"></md-input>
                     </md-input-container>
-
-                    <!-- TODO ERROR MESSAGE -->
                 </md-card-content>
                 <md-card-actions>
                     <md-button type="submit">Inscription</md-button>
@@ -138,13 +136,13 @@
 
             </md-card>
             <md-snackbar ref="snackbarSuccess">
-                <span>Sign up successful, you will be redirected soon.</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close
+                <span>Vous avez bien été inscris, vous allez être redirigé d'ici quelques secondes.</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
                 </md-button>
             </md-snackbar>
             <md-snackbar ref="snackbarFail">
-                <span>Unable to create account</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close
+                <span>Erreur lors de la création du compte</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
                 </md-button>
             </md-snackbar>
         </form>
@@ -189,7 +187,38 @@
 
 <script type="text/x-template" id="myaccount-me-component">
     <div class="myaccount-me-component">
-        ME
+        <form @submit.stop.prevent="updateMe">
+            <md-input-container>
+                <label>Nom</label>
+                <md-input required v-model="form.name"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>Prénom</label>
+                <md-input required v-model="form.surname"></md-input>
+            </md-input-container>
+            <br>
+            <md-input-container>
+                <label>Adresse</label>
+                <md-input required v-model="form.address"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>Mail</label>
+                <md-input required type="email" v-model="form.email"></md-input>
+            </md-input-container>
+
+            <md-button type="submit">Valider</md-button>
+
+            <md-snackbar ref="snackbarSuccess">
+                <span>Vos infos ont bien été enregistrées.</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
+                </md-button>
+            </md-snackbar>
+            <md-snackbar ref="snackbarFail">
+                <span>Impossible d'enregistrer les infos</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
+                </md-button>
+            </md-snackbar>
+        </form>
     </div>
 </script>
 
@@ -214,7 +243,8 @@
             </md-list-item>
         </md-list>
 
-        <md-button id="myaccount-buy-button" class="md-raised md-primary" @click.native="select()">Selectionner</md-button>
+        <md-button id="myaccount-buy-button" class="md-raised md-primary" @click.native="select()">Selectionner
+        </md-button>
 
         <!------- DIALOG ------->
         <md-dialog md-open-from="#myaccount-buy-button" md-close-to="#myaccount-buy-button" ref="buy-dialog">

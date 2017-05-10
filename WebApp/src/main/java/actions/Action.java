@@ -22,7 +22,7 @@ public abstract class Action {
     }
 
     public abstract void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, NotLoggedException, SignUpException, NullAvailableProductException, ClientNullException, ConnectionFailException, IncompatibleTypeException;
+            throws ServletException, NotLoggedException, SignUpException, NullAvailableProductException, ClientNullException, ConnectionFailException, IncompatibleTypeException, MissingInformationException;
 
 
     protected boolean isClient(HttpServletRequest req, HttpServletResponse res)
@@ -33,14 +33,6 @@ public abstract class Action {
         Client user = (Client) session.getAttribute(SESSION_CLIENT_FIELD);
 
         return user != null;
-    }
-    protected String parameterString(String attributeName, HttpServletRequest req) throws IncompatibleTypeException {
-        Object o = req.getParameter(attributeName);
-        if(o instanceof String){
-            return (String)o;
-        }
-        throw new IncompatibleTypeException(attributeName+" is not a String");
-
     }
 
 }

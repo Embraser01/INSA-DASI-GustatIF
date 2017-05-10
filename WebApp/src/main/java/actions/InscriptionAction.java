@@ -1,6 +1,7 @@
 package actions;
 
 import exception.IncompatibleTypeException;
+import exception.MissingInformationException;
 import exception.SignUpException;
 import metier.modele.Client;
 import metier.service.ServiceMetier;
@@ -17,17 +18,20 @@ public class InscriptionAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, SignUpException, IncompatibleTypeException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, SignUpException, IncompatibleTypeException, MissingInformationException {
 
-        String name = parameterString("name",req);
-        String surname = parameterString("surname",req);
-        String email = parameterString("email",req);
-        String address = parameterString("address",req);
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        String email = req.getParameter("email");
+        String address = req.getParameter("address");
 
+
+        if (name == null || surname == null || email == null || address == null)
+            throw new MissingInformationException();
 
         Client user = new Client(name, surname, email, address);
         if (!serviceMetier.inscription(user)) throw new SignUpException();
 
-        req.setAttribute(RESULTS_FIELD,user);
+        req.setAttribute(RESULTS_FIELD, user);
     }
 }

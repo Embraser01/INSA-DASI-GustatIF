@@ -30,7 +30,9 @@ function serializeForm(form) {
     const kvpairs = [];
 
     Object.keys(form).map(e => {
-        if (typeof form[e] === "string") kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e]))
+        if (typeof form[e] === "string"
+            || typeof form[e] === "number")
+            kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e]))
     });
 
     return kvpairs.join("&");
@@ -54,15 +56,26 @@ Vue.use(VueResource);
 
 ///////// AUTH //////////
 
-class AuthService {
+class UserService {
     constructor() {
+
         this.user = null;
+
+        if (DEBUG_MODE) {
+            Vue.http.post(getActionURL('connexion'), serializeForm({
+                email: 'romain.mie@free.fr',
+                password: 138
+            }), FORM_CONTENT_TYPE);
+        }
     }
 
     isLogged() {
         return Boolean(this.user);
     }
 
+    getUser() {
+        return this.user;
+    }
 
     signup(form) {
         return Vue.http.post(getActionURL('inscription'), serializeForm(form), FORM_CONTENT_TYPE)
@@ -72,9 +85,17 @@ class AuthService {
     login(form) {
         return Vue.http.post(getActionURL('connexion'), serializeForm(form), FORM_CONTENT_TYPE)
             .then(response => response.json())
-            .then(res => {
-                return this.user = res;
+            .then(user => {
+                return this.user = user;
             });
+    }
+
+    update(newUser) {
+        return Vue.http.post(getActionURL('majInfoClient'), serializeForm(newUser), FORM_CONTENT_TYPE)
+            .then(response => response.json())
+            .then(user => {
+                return this.user = user;
+            })
     }
 
     logout() {
@@ -85,7 +106,7 @@ class AuthService {
     }
 }
 
-const authService = new AuthService();
+const userService = new UserService();
 
 
 const HomeApp = {
@@ -97,14 +118,14 @@ const Login = {
     data: () => {
         return {
             form: {
-                mail: '',
+                email: '',
                 password: ''
             }
         }
     },
     methods: {
         login() {
-            authService.login(this.form)
+            userService.login(this.form)
                 .then(user => {
                     log(user);
                     router.push('/');
@@ -131,7 +152,7 @@ const Signup = {
     },
     methods: {
         signup() {
-            authService.signup(this.form)
+            userService.signup(this.form)
                 .then(response => {
                     // TODO SUCCESS SIGNUP
                     // GET DATA FROM response.json().then(data => this.data = data);
@@ -157,7 +178,7 @@ const MyAccount = {
     methods: {
         logout() {
             log("WHY");
-            authService.logout().then(() => {
+            userService.logout().then(() => {
                 router.push('/');
             });
             // TODO ERROR HANDLING
@@ -173,26 +194,33 @@ const MyAccountMe = {
                 name: '',
                 surname: '',
                 address: '',
-                mail: ''
+                email: ''
             }
         }
     },
     created() {
-        // TODO Load current user
+        let user = userService.getUser();
+        this.form = {
+            name: user.nom,
+            surname: user.prenom,
+            address: user.adresse,
+            email: user.mail
+        };
+
     },
     methods: {
         updateMe() {
 
-            this.$http.post(getActionURL('majInfoClient'), serializeForm(this.form), FORM_CONTENT_TYPE)
-                .then(response => response.json())
+            userService.update(this.form)
                 .then(response => {
-                    // TODO SUCCESS MAJ
+                    // TODO SUCCESS UPDATE
                     // GET DATA FROM response.json().then(data => this.data = data);
                     log(response);
+
                 })
                 .catch(response => {
-                    // TODO ERROR MAJ
-                    log(response);
+                    // TODO ERROR UPDATE
+                    log(response.json());
                 });
         }
     }
@@ -308,7 +336,7 @@ const routes = [
     {
         path: '/',
         beforeEnter: (to, from, next) => {
-            router.replace(authService.isLogged() ? '/myaccount' : '/auth');
+            router.replace(userService.isLogged() ? '/myaccount' : '/auth');
         }
     },
     {
@@ -375,13 +403,9 @@ const whitelist = [
     '/dashboard/close'
 ];
 
-if (DEBUG_MODE) {
-    whitelist.push('/myaccount');
-}
-
 router.beforeEach((to, from, next) => {
     // When not connected, only allow certain routes
-    if (authService.isLogged() || whitelist.indexOf(to.path) > -1) return next();
+    if (userService.isLogged() || whitelist.indexOf(to.path) > -1) return next();
     return next('/');
 });
 
