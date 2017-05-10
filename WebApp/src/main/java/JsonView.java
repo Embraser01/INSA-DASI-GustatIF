@@ -13,8 +13,6 @@ public class JsonView {
 
     public static void inscription(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
-        // To use results :
-        // TODO Set header for json
         Client user = (Client)req.getAttribute(Action.RESULTS_FIELD);
         res.getWriter().print(new Gson().toJson(user));
     }
