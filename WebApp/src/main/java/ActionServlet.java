@@ -11,6 +11,7 @@ import java.io.IOException;
 
 /**
  * "C:\Program Files\Java\jdk1.8.0_77\db\bin\startNetworkServer" -noSecurityManager
+ * E:\jdk\db\bin\startNetworkServer
  */
 public class ActionServlet extends HttpServlet {
 
@@ -75,6 +76,9 @@ public class ActionServlet extends HttpServlet {
             case "rechercherLivraison":
                 action = new RechercherLivraisonAction(serviceMetier);
                 break;
+            case "deconnexion":
+                action = new DeconnexionAction(serviceMetier);
+                break;
             default:
                 JsonView.notFound(req, res, "Unknown action !");
                 return;
@@ -82,16 +86,26 @@ public class ActionServlet extends HttpServlet {
 
         try {
             action.execute(req, res);
-        } catch (NotLoggedException | SignUpException e) {
-            // TODO SEND RESPONSE
-        } catch(ClientNullException e) {
-
-        } catch(ConnectionFailException e) {
-
-        } catch ( NullAvailableProductException e){
+        } catch (NotLoggedException e) {
+            JsonView.badRequest(req, res, "Login failed");
+            return;
+        } catch (SignUpException e) {
+            JsonView.badRequest(req, res, "SignUp failed");
+            return;
+        } catch (ClientNullException e) {
+            JsonView.notFound(req, res, "No such client");
+            return;
+        } catch (ConnectionFailException e) {
+            JsonView.badRequest(req, res, "Connection failed");
+            return;
+        } catch (NullAvailableProductException e) {
             //TODO use JsonView function for reporting errors
 
-            res.sendError(400,"No products were found. Check requested restaurant");
+            JsonView.notFound(req, res, "No products were found. Check requested restaurant");
+            return;
+        } catch (IncompatibleTypeException e) {
+            JsonView.badRequest(req, res, e.getMessage());
+            return;
         }
 
 
@@ -126,6 +140,9 @@ public class ActionServlet extends HttpServlet {
                 break;
             case "rechercherLivraison":
                 JsonView.rechercherLivraison(req, res);
+                break;
+            case "deconnexion":
+                JsonView.ok(req, res, "Vous avez bien été déconnecté(e)");
                 break;
         }
     }

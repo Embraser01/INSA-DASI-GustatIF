@@ -4,6 +4,11 @@
 
 const DEBUG_MODE = true;
 const SERVLET_PATH = '/ActionServlet';
+const FORM_CONTENT_TYPE = {
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+};
 
 //
 // UTILS
@@ -12,12 +17,21 @@ const SERVLET_PATH = '/ActionServlet';
 function log() {
     if (!DEBUG_MODE) return;
 
-    return console.log(arguments);
+    return console.log(...arguments);
 }
 
 
 function getActionURL(action) {
     return SERVLET_PATH + '?action=' + action;
+}
+
+
+function serializeForm(form) {
+    const kvpairs = [];
+
+    Object.keys(form).map(e => kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e])));
+
+    return kvpairs.join("&");
 }
 
 //
@@ -54,17 +68,18 @@ const Login = {
     },
     methods: {
         login() {
-            let formData = new FormData();
 
-            formData.append('mail', this.mail);
-            formData.append('password', this.password);
-
-            this.$http.post(getActionURL('connexion'), formData).then(response => {
-                // TODO SUCCESS LOGIN
-                // GET DATA FROM response.json().then(data => this.data = data);
-            }, response => {
-                // TODO ERROR LOGIN
-            });
+            this.$http.post(getActionURL('connexion'), serializeForm(this.form), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(response => {
+                    // TODO SUCCESS LOGIN
+                    // GET DATA FROM response.json().then(data => this.data = data);
+                    log(response);
+                })
+                .catch(response => {
+                    // TODO ERROR LOGIN
+                    log(response);
+                });
         }
     }
 };
@@ -77,25 +92,28 @@ const Signup = {
                 name: '',
                 surname: '',
                 address: '',
-                mail: ''
+                email: ''
             }
         }
     },
     methods: {
         signup() {
-            let formData = new FormData();
 
-            formData.append('name', this.name);
-            formData.append('surname', this.surname);
-            formData.append('address', this.address);
-            formData.append('mail', this.mail);
+            this.$http.post(getActionURL('inscription'), serializeForm(this.form), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(response => {
+                    // TODO SUCCESS SIGNUP
+                    // GET DATA FROM response.json().then(data => this.data = data);
+                    log(response);
+                    this.$refs.snackbarSuccess.open();
+                    setTimeout(() => router.push('login'), 4000);
 
-            this.$http.post(getActionURL('inscription'), formData).then(response => {
-                // TODO SUCCESS SIGNUP
-                // GET DATA FROM response.json().then(data => this.data = data);
-            }, response => {
-                // TODO ERROR SIGNUP
-            });
+                })
+                .catch(response => {
+                    // TODO ERROR SIGNUP
+                    log(response.json());
+                    this.$refs.snackbarFail.open();
+                });
         }
     }
 };
@@ -108,15 +126,92 @@ const MyAccount = {
 };
 
 const MyAccountMe = {
-    template: '#myaccount-me-component'
+    template: '#myaccount-me-component',
+    data: () => {
+        return {
+            form: {
+                name: '',
+                surname: '',
+                address: '',
+                mail: ''
+            }
+        }
+    },
+    created() {
+        // TODO Load current user
+    },
+    methods: {
+        updateMe() {
+
+            this.$http.post(getActionURL('majInfoClient'), serializeForm(this.form), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(response => {
+                    // TODO SUCCESS MAJ
+                    // GET DATA FROM response.json().then(data => this.data = data);
+                    log(response);
+                })
+                .catch(response => {
+                    // TODO ERROR MAJ
+                    log(response);
+                });
+        }
+    }
 };
 
 const MyAccountBuy = {
-    template: '#myaccount-buy-component'
+    template: '#myaccount-buy-component',
+    data: () => {
+        return {
+            restaurants: [],
+            selectedRestaurants: []
+        }
+    },
+    created() {
+        this.$http.get(getActionURL("restaurantsPartenaires"))
+            .then(response => response.json())
+            .then(response => {
+                this.restaurants = response;
+            })
+            .catch(response => {
+                // ERROR
+            });
+    }
 };
 
 const MyAccountHistory = {
-    template: '#myaccount-history-component'
+    template: '#myaccount-history-component',
+    data: () => {
+        return {
+            current: [],
+            old: []
+        }
+    },
+    created() {
+
+        this.current = [
+            {
+                dateEnregistrementCommande: Date.now() - 1000 * 60 * 60 * 24,
+                dateLivraisonCommande: Date.now() - 1000 * 60 * 60 * 24,
+                id: 120
+
+            }
+        ];
+
+        this.old = [
+            {
+                dateEnregistrementCommande: Date.now() - 1000 * 60 * 60 * 24,
+                dateLivraisonCommande: Date.now() - 1000 * 60 * 60 * 24,
+                id: 120
+
+            }
+        ]
+
+        // this.$http.get(getActionURL("")).then(response => {
+        //     this.restaurants = response.json();
+        // }, response => {
+        //     // ERROR
+        // });
+    }
 };
 
 const About = {
@@ -127,13 +222,6 @@ Vue.component('myaccount-me', MyAccountMe);
 Vue.component('myaccount-buy', MyAccountBuy);
 Vue.component('myaccount-history', MyAccountHistory);
 Vue.component('about', About);
-
-
-////////// SHOPPING CART //////////////
-
-const ShoppingCart = {
-    template: '#shopping-cart-component'
-};
 
 
 ////////// ADMINISTRATION //////////////
@@ -178,7 +266,8 @@ const routes = [
         }
     },
     {
-        path: '/auth', component: HomeApp
+        path: '/auth',
+        component: HomeApp
     },
     {
         path: '/auth/login',
@@ -193,17 +282,16 @@ const routes = [
         component: MyAccount
     },
     {
-        path: '/cart', component: ShoppingCart
-    },
-    {
         path: '/member',
         component: HomeAdmin
     },
     {
-        path: '/manager', component: Manager
+        path: '/manager',
+        component: Manager
     },
     {
-        path: '/delivery', component: Delivery
+        path: '/delivery',
+        component: Delivery
     },
     {
         path: '/dashboard',

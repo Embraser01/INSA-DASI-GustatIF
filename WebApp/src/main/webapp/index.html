@@ -51,6 +51,9 @@
                 <router-link to="/auth/login">
                     <md-button class="md-raised md-primary">S'identifier</md-button>
                 </router-link>
+                <router-link to="/myaccount">
+                    <md-button class="md-raised md-primary">to page buy</md-button>
+                </router-link>
             </md-card-content>
         </md-card>
     </div>
@@ -124,6 +127,14 @@
                 </md-card-actions>
 
             </md-card>
+            <md-snackbar ref="snackbarSuccess">
+                <span>Sign up successful, you will be redirected soon.</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close</md-button>
+            </md-snackbar>
+            <md-snackbar ref="snackbarFail">
+                <span>Unable to create account</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Close</md-button>
+            </md-snackbar>
         </form>
     </div>
 </script>
@@ -161,8 +172,52 @@
 
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
+        <form @submit.stop.prevent="buy">
+            <div>
+                <md-table v_once>
+                    <md-table-header>
+                        <md-table-row>
+                            <md-table-head ></md-table-head>
+                            <md-table-head >Restaurant</md-table-head>
+                            <md-table-head >Description</md-table-head>
+
+                        </md-table-row>
+                    </md-table-header>
+                    <md-table-body>
+                        <md-table-row v-for="(row, rowIndex) in restaurants" :key="rowIndex" >
+                            <md-radio v-model="selected" :md-value="row"></md-radio>
+                            <md-table-cell>
+                                {{ row.denomination }}
+                            </md-table-cell>
+                            <md-table-cell>
+                                {{ row.description }}
+                            </md-table-cell>
+                        </md-table-row>
+
+                    </md-table-body>
+                </md-table>
+                <md-button class="md-raised md-primary">Selectionner</md-button>
+            </div>
+        </form>
         PASSER UNE COMMANDE
+
+        <md-dialog md-open-from="#fab" md-close-to="#fab" ref="buy-dialog">
+            <md-dialog-title>Choix des plats</md-dialog-title>
+
+            <md-dialog-content>
+                Riz cantonais ...
+                <!-- TODO CDC PAS DE PANIER FINALEMENT -->
+            </md-dialog-content>
+
+            <md-dialog-actions>
+                <md-button class="md-primary" @click.native="closeDialog('buy-dialog')">Revenir au choix des
+                    restaurants
+                </md-button>
+                <md-button class="md-primary" @click.native="closeDialog('buy-dialog')">Valider la commande</md-button>
+            </md-dialog-actions>
+        </md-dialog>
     </div>
+
 </script>
 
 <script type="text/x-template" id="myaccount-history-component">
@@ -174,12 +229,6 @@
 <script type="text/x-template" id="about-component">
     <div class="about-component">
         A PROPOS DE
-    </div>
-</script>
-
-<script type="text/x-template" id="shopping-cart-component">
-    <div class="shopping-cart-component">
-
     </div>
 </script>
 
@@ -206,24 +255,34 @@
     </div>
 </script>
 
+<!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
 <script type="text/x-template" id="manager-component">
     <div class="manager-component">
-
     </div>
 </script>
 
+
+<!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
 <script type="text/x-template" id="delivery-component">
     <div class="delivery-component">
-
     </div>
 </script>
 
 <script type="text/x-template" id="dashboard-component">
     <div class="dashboard-component">
+        <md-card md-with-hover>
+            <md-card-header>
+                <div class="md-title">Dashboard</div>
+            </md-card-header>
 
+            <md-card-content>
+                <!-- TODO CHECKBOX OU BOUTON & CARTE -->
+            </md-card-content>
+        </md-card>
     </div>
 </script>
 
+<!-- TODO Panel de recherche de livraisons & Tableau livraisons et cloture d'une livraison -->
 <script type="text/x-template" id="delivery-history-component">
     <div class="delivery-history-component">
 

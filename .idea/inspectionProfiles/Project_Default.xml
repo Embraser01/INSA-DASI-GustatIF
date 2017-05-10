@@ -14,31 +14,28 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="24">
+          <list size="21">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
             <item index="3" class="java.lang.String" itemvalue="noscript" />
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
-            <item index="6" class="java.lang.String" itemvalue="router-view" />
-            <item index="7" class="java.lang.String" itemvalue="router-link" />
-            <item index="8" class="java.lang.String" itemvalue="md-button" />
-            <item index="9" class="java.lang.String" itemvalue="md-toolbar" />
-            <item index="10" class="java.lang.String" itemvalue="md-card" />
-            <item index="11" class="java.lang.String" itemvalue="md-card-header" />
-            <item index="12" class="java.lang.String" itemvalue="md-card-content" />
-            <item index="13" class="java.lang.String" itemvalue="md-card-action" />
-            <item index="14" class="java.lang.String" itemvalue="md-input-container" />
-            <item index="15" class="java.lang.String" itemvalue="md-input" />
-            <item index="16" class="java.lang.String" itemvalue="md-card-actions" />
-            <item index="17" class="java.lang.String" itemvalue="md-icon" />
-            <item index="18" class="java.lang.String" itemvalue="md-tabs" />
-            <item index="19" class="java.lang.String" itemvalue="md-tab" />
-            <item index="20" class="java.lang.String" itemvalue="myaccount-me" />
-            <item index="21" class="java.lang.String" itemvalue="myaccount-buy" />
-            <item index="22" class="java.lang.String" itemvalue="myaccount-history" />
-            <item index="23" class="java.lang.String" itemvalue="about" />
+            <item index="6" class="java.lang.String" itemvalue="md-card-header" />
+            <item index="7" class="java.lang.String" itemvalue="md-card-content" />
+            <item index="8" class="java.lang.String" itemvalue="md-input-container" />
+            <item index="9" class="java.lang.String" itemvalue="md-input" />
+            <item index="10" class="java.lang.String" itemvalue="md-card-actions" />
+            <item index="11" class="java.lang.String" itemvalue="md-button" />
+            <item index="12" class="java.lang.String" itemvalue="md-card" />
+            <item index="13" class="java.lang.String" itemvalue="md-dialog" />
+            <item index="14" class="java.lang.String" itemvalue="md-dialog-title" />
+            <item index="15" class="java.lang.String" itemvalue="md-dialog-content" />
+            <item index="16" class="java.lang.String" itemvalue="md-textarea" />
+            <item index="17" class="java.lang.String" itemvalue="md-dialog-actions" />
+            <item index="18" class="java.lang.String" itemvalue="md-toolbar" />
+            <item index="19" class="java.lang.String" itemvalue="router-link" />
+            <item index="20" class="java.lang.String" itemvalue="router-view" />
           </list>
         </value>
       </option>

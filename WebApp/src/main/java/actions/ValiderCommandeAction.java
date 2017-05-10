@@ -24,7 +24,7 @@ public class ValiderCommandeAction extends Action {
 
 
         Commande commande = new Commande((Client) req.getSession().getAttribute(SESSION_CLIENT_FIELD));
-
+        this.serviceMetier.validerCommande(commande);
         // TODO READ FROM JSON
     }
 }

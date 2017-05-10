@@ -19,7 +19,6 @@ public class ClientsGustatifAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, ClientNullException {
         List<Client> clients = this.serviceMetier.clientsGustatif();
-
         if (clients == null) {
             throw new ClientNullException();
         }
