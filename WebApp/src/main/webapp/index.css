@@ -18,3 +18,10 @@
     margin-top: 50px;
     width: 500px;
 }
+
+.myaccount-buy-component {
+
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -206,6 +206,13 @@ const MyAccountBuy = {
             selected: []
         }
     },
+
+    methods: {
+        select() {
+            log("Restaurant selectionner : ", this.restaurants[this.selected]);
+            // TODO OPEN DIALOG
+        }
+    },
     created() {
         this.$http.get(getActionURL("restaurantsPartenaires"))
             .then(response => response.json())
@@ -213,7 +220,7 @@ const MyAccountBuy = {
                 this.restaurants = response;
             })
             .catch(response => {
-                // ERROR
+                // TODO ERROR HANDLING
             });
     }
 };
@@ -367,6 +374,10 @@ const whitelist = [
     '/dashboard/history',
     '/dashboard/close'
 ];
+
+if (DEBUG_MODE) {
+    whitelist.push('/myaccount');
+}
 
 router.beforeEach((to, from, next) => {
     // When not connected, only allow certain routes
