@@ -432,13 +432,19 @@
         <md-layout class="dashboard-container">
             <md-layout md-column>
                 <md-switch v-model="restos" @click.native="updateMap">Voir les restaurants</md-switch>
-                <md-switch v-model="livreurs" @click.native="updateMap" >Voir les livreurs</md-switch>
+                <md-switch v-model="livreurs" @click.native="updateMap">Voir les livreurs</md-switch>
                 <md-switch v-model="clients" @click.native="updateMap">Voir les clients</md-switch>
+                <span style="flex: 1"></span>
+                <md-button class="md-raised md-primary" @click.native="" v-if="seeDeliveryDone === 'true'">Voir
+                    livraison
+                    effectuées
+                </md-button>
+                <md-button class="md-raised md-primary" @click.native="">Clôturer Livraison</md-button>
             </md-layout>
 
             <gmap-map style="width: 50%; height: 100%; float: right;"
                       :center="center"
-                      :zoom="15"
+                      :zoom="12"
             >
                 <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
                                   :content="infoContent" @closeclick="infoWinOpen=false"></gmap-info-window>
@@ -446,7 +452,6 @@
                              @click="toggleInfoWindow(m,i)"></gmap-marker>
             </gmap-map>
         </md-layout>
-
     </div>
 </script>
 
