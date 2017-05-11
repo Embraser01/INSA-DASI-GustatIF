@@ -4,10 +4,8 @@
 
 const DEBUG_MODE = true;
 const SERVLET_PATH = '/ActionServlet';
-const FORM_CONTENT_TYPE = {
-    headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
+const DATA_CONTENT_TYPE = {
+    emulateJSON: true
 };
 
 //
@@ -23,28 +21,6 @@ function log() {
 
 function getActionURL(action) {
     return SERVLET_PATH + '?action=' + action;
-}
-
-
-function serializeForm(form) {
-    const kvpairs = [];
-    let type = '';
-
-    Object.keys(form).map(e => {
-        type = typeof form[e];
-
-        switch (type) {
-            case 'string':
-            case 'number':
-                kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e]));
-                break;
-            case 'object':
-                kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(JSON.stringify(form[e])));
-                break;
-        }
-    });
-
-    return kvpairs.join("&");
 }
 
 //
@@ -89,12 +65,12 @@ class UserService {
     }
 
     signup(form) {
-        return Vue.http.post(getActionURL('inscription'), serializeForm(form), FORM_CONTENT_TYPE)
+        return Vue.http.post(getActionURL('inscription'), form, DATA_CONTENT_TYPE)
             .then(response => response.json());
     }
 
     login(form) {
-        return Vue.http.post(getActionURL('connexion'), serializeForm(form), FORM_CONTENT_TYPE)
+        return Vue.http.post(getActionURL('connexion'), form, DATA_CONTENT_TYPE)
             .then(response => response.json())
             .then(user => {
                 return this.user = user;
@@ -102,7 +78,7 @@ class UserService {
     }
 
     update(newUser) {
-        return Vue.http.post(getActionURL('majInfoClient'), serializeForm(newUser), FORM_CONTENT_TYPE)
+        return Vue.http.post(getActionURL('majInfoClient'), newUser, DATA_CONTENT_TYPE)
             .then(response => response.json())
             .then(user => {
                 return this.user = user;
@@ -251,9 +227,9 @@ const MyAccountBuy = {
     methods: {
         select() {
             log("Restaurant selectionner : ", this.restaurants[this.cart.restaurant]);
-            this.$http.post(getActionURL("produitsDisponible"), serializeForm({
+            this.$http.post(getActionURL("produitsDisponible"), {
                 id: this.cart.restaurant
-            }), FORM_CONTENT_TYPE)
+            }, DATA_CONTENT_TYPE)
                 .then(response => response.json())
                 .then(products => {
                     this.selectedProducts = products;
@@ -303,10 +279,10 @@ const MyAccountBuy = {
 
         buy() {
             this.$http.post(getActionURL("validerCommande"),
-                serializeForm({
+                {
                     commande: this.cart
-                }),
-                FORM_CONTENT_TYPE
+                },
+                DATA_CONTENT_TYPE
             )
                 .then(response => response.json())
                 .then(response => {

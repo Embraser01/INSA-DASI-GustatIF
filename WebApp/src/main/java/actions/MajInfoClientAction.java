@@ -31,7 +31,12 @@ public class MajInfoClientAction extends Action {
         if (name == null || surname == null || email == null || address == null)
             throw new MissingInformationException();
 
-        Client user = new Client(name, surname, email, address);
+        Client user = (Client) req.getSession().getAttribute(SESSION_CLIENT_FIELD);
+        user.setNom(name);
+        user.setPrenom(surname);
+        user.setAdresse(address);
+        user.setMail(email);
+
         user = serviceMetier.majInfoClient(user);
 
         if (user == null) throw new InfoClientUpdateException();
