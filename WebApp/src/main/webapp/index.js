@@ -133,7 +133,8 @@ const Login = {
                     router.push('/');
                 })
                 .catch(error => {
-                    // TODO ERROR LOGIN
+                    this.$refs.snackbarFail.open();
+                    this.form.password = '';
                     log(error);
                 });
         }
@@ -269,18 +270,30 @@ const MyAccountHistory = {
 
         this.current = [
             {
-                dateEnregistrementCommande: Date.now() - 1000 * 60 * 60 * 24,
-                dateLivraisonCommande: Date.now() - 1000 * 60 * 60 * 24,
-                id: 120
+                dateEnregistrementCommande: moment("13/12/2016 13:08:22", "DD-MM-YYYY HH:mm:ss"),
+                dateLivraisonCommande: null,
+                id: 810
+
+            },
+            {
+                dateEnregistrementCommande: moment("15/01/2017 13:08:22", "DD-MM-YYYY HH:mm:ss"),
+                dateLivraisonCommande: null,
+                id: 812
 
             }
         ];
 
         this.old = [
             {
-                dateEnregistrementCommande: Date.now() - 1000 * 60 * 60 * 24,
-                dateLivraisonCommande: Date.now() - 1000 * 60 * 60 * 24,
-                id: 120
+                dateEnregistrementCommande: moment("13/12/2016 13:08:22", "DD-MM-YYYY HH:mm:ss"),
+                dateLivraisonCommande: moment("13/12/2016 14:22:56", "DD-MM-YYYY HH:mm:ss"),
+                id: 803
+
+            },
+            {
+                dateEnregistrementCommande: moment("15/01/2017 13:08:22", "DD-MM-YYYY HH:mm"),
+                dateLivraisonCommande: moment("15/01/2017 14:22:56", "DD-MM-YYYY HH:mm:ss"),
+                id: 805
 
             }
         ]

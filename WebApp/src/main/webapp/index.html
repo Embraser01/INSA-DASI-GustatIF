@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="//unpkg.com/vue-material/dist/vue-material.css">
     <link rel="stylesheet" href="index.css">
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" defer></script>
     <script src="//unpkg.com/vue/dist/vue.min.js" defer></script>
     <script src="//unpkg.com/vue-material/dist/vue-material.js" defer></script>
     <script src="//unpkg.com/vue-router/dist/vue-router.min.js" defer></script>
@@ -64,7 +65,6 @@
 <!------- LOGIN -------->
 <!---------------------->
 
-<!-- TODO Afficher un message d'erreur en cas d'echec -->
 <script type="text/x-template" id="login-component">
     <div class="login-component">
         <form @submit.stop.prevent="login">
@@ -93,6 +93,11 @@
                 </md-card-actions>
 
             </md-card>
+            <md-snackbar ref="snackbarFail">
+                <span>Mauvaise combinaison Mail/Mot de passe</span>
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbarFail.close()">Fermer
+                </md-button>
+            </md-snackbar>
         </form>
     </div>
 </script>
@@ -136,12 +141,12 @@
             </md-card>
             <md-snackbar ref="snackbarSuccess">
                 <span>Vous avez bien été inscris, vous allez être redirigé d'ici quelques secondes.</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbarSuccess.close()">Fermer
                 </md-button>
             </md-snackbar>
             <md-snackbar ref="snackbarFail">
                 <span>Erreur lors de la création du compte</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbarFail.close()">Fermer
                 </md-button>
             </md-snackbar>
         </form>
@@ -209,12 +214,12 @@
 
             <md-snackbar ref="snackbarSuccess">
                 <span>Vos infos ont bien été enregistrées.</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbarSuccess.close()">Fermer
                 </md-button>
             </md-snackbar>
             <md-snackbar ref="snackbarFail">
                 <span>Impossible d'enregistrer les infos</span>
-                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Fermer
+                <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbarFail.close()">Fermer
                 </md-button>
             </md-snackbar>
         </form>
@@ -269,10 +274,47 @@
 <!------------------------------------->
 <!------- MY ACCOUNT - HISTORY -------->
 <!------------------------------------->
-<!-- TODO Afficher historique -->
+
 <script type="text/x-template" id="myaccount-history-component">
     <div class="myaccount-history-component">
-        VOIR L'HISTORIQUE
+
+        <md-subheader>Commandes terminées</md-subheader>
+        <md-table md-sort="dateEnregistrementCommande">
+            <md-table-header>
+                <md-table-row>
+                    <md-table-head md-numeric md-sort-by="id">ID Commande</md-table-head>
+                    <md-table-head md-sort-by="dateEnregistrementCommande">Date de commande</md-table-head>
+                    <md-table-head md-sort-by="dateLivraisonCommande">Date de livraison</md-table-head>
+                </md-table-row>
+            </md-table-header>
+
+            <md-table-body>
+                <md-table-row v-for="(row, index) in old" :key="index">
+                    <md-table-cell>{{ row.id }}</md-table-cell>
+                    <md-table-cell>{{ row.dateEnregistrementCommande.format("L HH:mm:ss") }}</md-table-cell>
+                    <md-table-cell>{{ row.dateLivraisonCommande.format("HH:mm:ss") }}</md-table-cell>
+                </md-table-row>
+            </md-table-body>
+        </md-table>
+
+        <md-subheader>Commandes en cours</md-subheader>
+        <md-table md-sort="dateEnregistrementCommande">
+            <md-table-header>
+                <md-table-row>
+                    <md-table-head md-numeric md-sort-by="id">ID Commande</md-table-head>
+                    <md-table-head md-sort-by="dateEnregistrementCommande">Date de commande</md-table-head>
+                    <md-table-head md-sort-by="dateLivraisonCommande">Date de livraison</md-table-head>
+                </md-table-row>
+            </md-table-header>
+
+            <md-table-body>
+                <md-table-row v-for="(row, index) in current" :key="index">
+                    <md-table-cell>{{ row.id }}</md-table-cell>
+                    <md-table-cell>{{ row.dateEnregistrementCommande.format("L HH:mm:ss") }}</md-table-cell>
+                    <md-table-cell>-</md-table-cell>
+                </md-table-row>
+            </md-table-body>
+        </md-table>
     </div>
 </script>
 

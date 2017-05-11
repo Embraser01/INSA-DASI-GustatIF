@@ -22,9 +22,23 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: fr.insalyon.dasi:GustatIF:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-web-api:7.0" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.6.1" level="project" />
-    <orderEntry type="library" name="Maven: fr.insalyon.dasi:GustatIF:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="GustatIF" />
+    <orderEntry type="library" name="Maven: org.apache.derby:derbyclient:10.12.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.persistence:eclipselink:2.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.maps:google-maps-services:0.1.17" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okhttp:okhttp:2.7.5" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.4" level="project" />
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="vue-material" level="application" />
+    <orderEntry type="library" name="vue-resource" level="application" />
+    <orderEntry type="library" name="vue-router" level="application" />
+    <orderEntry type="library" name="moment" level="application" />
   </component>
 </module>
