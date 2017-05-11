@@ -220,7 +220,8 @@ const MyAccountBuy = {
                 restaurant: -1,
                 produits: []
             },
-            selectedProducts: null
+            selectedProducts: null,
+            total: 0
         }
     },
 
@@ -234,15 +235,16 @@ const MyAccountBuy = {
                 .then(products => {
                     this.selectedProducts = products;
                     this.cart.produits = [];
+                    this.total = 0;
                     this.$refs.buyDialog.open();
                 });
         },
 
-        getProduct(id) {
+        getProduct(pr) {
             let qte = 0;
 
             this.cart.produits.some(p => {
-                if (p.id === id) {
+                if (p.id === pr.id) {
                     qte = p.qte;
                     return true; // Stop testing
                 }
@@ -250,11 +252,11 @@ const MyAccountBuy = {
             return qte;
         },
 
-        addProduct(id) {
+        addProduct(pr) {
             let found = false;
 
             this.cart.produits.some(p => {
-                if (p.id === id) {
+                if (p.id === pr.id) {
                     found = true;
                     p.qte++;
                     return true; // Stop testing
@@ -262,21 +264,30 @@ const MyAccountBuy = {
             });
             if (!found) {
                 this.cart.produits.push({
-                    id: id,
-                    qte: 1
+                    id: pr.id,
+                    qte: 1,
+                    prix: pr.prix
                 });
             }
         },
 
-        removeProduct(id){
+        removeProduct(pr){
             this.cart.produits.some(p => {
-                if (p.id === id && p.id > 0) {
+                if (p.id === pr.id && p.id > 0) {
                     p.qte--;
                     return true;
                 }
             });
         },
 
+        getTotal() {
+            let total = 0;
+            this.cart.produits.forEach(p => {
+                total += p.prix * p.qte;
+            });
+
+            return total;
+        },
         buy() {
             this.$http.post(getActionURL("validerCommande"),
                 {
