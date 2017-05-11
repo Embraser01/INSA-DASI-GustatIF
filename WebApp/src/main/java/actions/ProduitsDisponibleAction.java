@@ -1,8 +1,9 @@
 package actions;
 
 
+import exception.IncompatibleTypeException;
+import exception.MissingInformationException;
 import exception.NullAvailableProductException;
-
 import metier.modele.Produit;
 import metier.modele.Restaurant;
 import metier.service.ServiceMetier;
@@ -21,15 +22,26 @@ public class ProduitsDisponibleAction extends Action {
 
     @Override
 
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, NullAvailableProductException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, NullAvailableProductException, MissingInformationException, IncompatibleTypeException {
 
-        Restaurant restaurant = (Restaurant) req.getAttribute("restaurant");
+        String ids = req.getParameter("id");
 
-        List<Produit> produits = serviceMetier.produitsDisponibles(restaurant);
-        if (produits == null) {
-            throw new NullAvailableProductException();
+        if (ids == null) throw new MissingInformationException();
+
+        try {
+            Long id = Long.valueOf(ids);
+
+            Restaurant restaurant = new Restaurant();
+            restaurant.setId(id);
+            List<Produit> produits = serviceMetier.produitsDisponibles(restaurant);
+            if (produits == null) {
+                throw new NullAvailableProductException();
+            }
+
+            req.setAttribute(RESULTS_FIELD, produits);
+
+        } catch (Exception e) {
+            throw new IncompatibleTypeException();
         }
-
-        req.setAttribute(RESULTS_FIELD,produits);
     }
 }

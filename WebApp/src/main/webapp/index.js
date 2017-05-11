@@ -28,11 +28,20 @@ function getActionURL(action) {
 
 function serializeForm(form) {
     const kvpairs = [];
+    let type = '';
 
     Object.keys(form).map(e => {
-        if (typeof form[e] === "string"
-            || typeof form[e] === "number")
-            kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e]))
+        type = typeof form[e];
+
+        switch (type) {
+            case 'string':
+            case 'number':
+                kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(form[e]));
+                break;
+            case 'object':
+                kvpairs.push(encodeURIComponent(e) + "=" + encodeURIComponent(JSON.stringify(form[e])));
+                break;
+        }
     });
 
     return kvpairs.join("&");
@@ -216,15 +225,10 @@ const MyAccountMe = {
 
             userService.update(this.form)
                 .then(response => {
-                    // TODO SUCCESS UPDATE
-                    // GET DATA FROM response.json().then(data => this.data = data);
-                    log(response);
                     this.$refs.snackbarSuccess.open();
 
                 })
                 .catch(response => {
-                    // TODO ERROR UPDATE
-                    log(response.json());
                     this.$refs.snackbarFail.open();
                 });
         }
@@ -236,14 +240,91 @@ const MyAccountBuy = {
     data: () => {
         return {
             restaurants: [],
-            selected: []
+            cart: {
+                restaurant: -1,
+                produits: []
+            },
+            selectedProducts: null
         }
     },
 
     methods: {
         select() {
-            log("Restaurant selectionner : ", this.restaurants[this.selected]);
-            // TODO OPEN DIALOG
+            log("Restaurant selectionner : ", this.restaurants[this.cart.restaurant]);
+            this.$http.post(getActionURL("produitsDisponible"), serializeForm({
+                id: this.cart.restaurant
+            }), FORM_CONTENT_TYPE)
+                .then(response => response.json())
+                .then(products => {
+                    this.selectedProducts = products;
+                    this.cart.produits = [];
+                    this.$refs.buyDialog.open();
+                });
+        },
+
+        getProduct(id) {
+            let qte = 0;
+
+            this.cart.produits.some(p => {
+                if (p.id === id) {
+                    qte = p.qte;
+                    return true; // Stop testing
+                }
+            });
+            return qte;
+        },
+
+        addProduct(id) {
+            let found = false;
+
+            this.cart.produits.some(p => {
+                if (p.id === id) {
+                    found = true;
+                    p.qte++;
+                    return true; // Stop testing
+                }
+            });
+            if (!found) {
+                this.cart.produits.push({
+                    id: id,
+                    qte: 1
+                });
+            }
+        },
+
+        removeProduct(id){
+            this.cart.produits.some(p => {
+                if (p.id === id && p.id > 0) {
+                    p.qte--;
+                    return true;
+                }
+            });
+        },
+
+        buy() {
+            this.$http.post(getActionURL("validerCommande"),
+                serializeForm({
+                    commande: this.cart
+                }),
+                FORM_CONTENT_TYPE
+            )
+                .then(response => response.json())
+                .then(response => {
+                    log(response);
+                    this.$refs.buyDialog.close();
+                    this.$refs.snackbarSuccess.open();
+                })
+                .catch(response => {
+                    this.$refs.buyDialog.close();
+                    this.$refs.snackbarFail.open();
+                });
+        },
+        closeDialog() {
+            this.$refs.buyDialog.close();
+            this.cart = {
+                restaurant: -1
+            };
+            this.selectedProducts = null;
         }
     },
     created() {

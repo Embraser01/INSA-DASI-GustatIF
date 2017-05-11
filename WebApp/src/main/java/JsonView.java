@@ -49,8 +49,8 @@ public class JsonView {
         res.getWriter().print(new Gson().toJson(livreurs));
     }
 
-    public static void validerCommande(HttpServletRequest req, HttpServletResponse res) {
-
+    public static void validerCommande(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        ok(req, res, "Commande validée");
     }
 
     public static void cloturerLivraison(HttpServletRequest req, HttpServletResponse res) {

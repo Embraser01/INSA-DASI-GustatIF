@@ -1,11 +1,11 @@
 package metier.modele;
 
-import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -161,4 +161,7 @@ public class Produit implements Serializable {
         return "Produit{" + "id=" + id + ", denomination=" + denomination + ", description=" + description + ", poids=" + poids + ", prix=" + prix + '}';
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 }
