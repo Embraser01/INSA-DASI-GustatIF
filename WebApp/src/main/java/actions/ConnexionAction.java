@@ -34,6 +34,10 @@ public class ConnexionAction extends Action {
             if (user == null) {
                 throw new ConnectionFailException();
             }
+
+            // Remove useless data
+
+            user.setListeCommandes(null);
             session.setAttribute(SESSION_CLIENT_FIELD, user);
             req.setAttribute(RESULTS_FIELD, user);
         } catch (Exception e) {

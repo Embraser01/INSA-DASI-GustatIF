@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="//unpkg.com/vue-material/dist/vue-material.css">
     <link rel="stylesheet" href="index.css">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" defer></script>
+    <script src="//unpkg.com/moment/min/moment.min.js" defer></script>
     <script src="//unpkg.com/vue/dist/vue.min.js" defer></script>
     <script src="//unpkg.com/vue-material/dist/vue-material.js" defer></script>
     <script src="//unpkg.com/vue-router/dist/vue-router.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.js" defer></script>
+    <script src="//unpkg.com/vue2-google-maps/dist/vue-google-maps.js" defer></script>
     <script src="//unpkg.com/vue-resource/dist/vue-resource.min.js" defer></script>
     <script src="index.js" defer></script>
 </head>
@@ -230,7 +232,7 @@
 <!--------------------------------->
 <!------- MY ACCOUNT - BUY -------->
 <!--------------------------------->
-<!-- TODO Finir dialog -->
+
 <script type="text/x-template" id="myaccount-buy-component">
     <div class="myaccount-buy-component">
         <md-list class="md-double-line">
@@ -392,9 +394,9 @@
 <!------- MANAGER -------->
 <!------------------------>
 
-<!-- TODO JUSTE LA PAGE DASHBOARD AVEC COMME OPTION "Voir livraisons effectuée "-->
 <script type="text/x-template" id="manager-component">
     <div class="manager-component">
+        <dashboard see-delivery-done="true"></dashboard>
     </div>
 </script>
 
@@ -403,9 +405,9 @@
 <!------- DELIVERY -------->
 <!------------------------->
 
-<!-- TODO PAGE DASHBOARD SANS L'OPTION "Voir livraisons effectuée"-->
 <script type="text/x-template" id="delivery-component">
     <div class="delivery-component">
+        <dashboard see-delivery-done="false"></dashboard>
     </div>
 </script>
 
@@ -416,15 +418,35 @@
 
 <script type="text/x-template" id="dashboard-component">
     <div class="dashboard-component">
-        <md-card md-with-hover>
-            <md-card-header>
-                <div class="md-title">Dashboard</div>
-            </md-card-header>
+        <md-toolbar class="md-dense">
+            <h2 class="md-title" style="flex: 1">Dashboard</h2>
 
-            <md-card-content>
-                <!-- TODO CHECKBOX OU BOUTON & CARTE -->
-            </md-card-content>
-        </md-card>
+            <router-link class="md-icon-button" to="/member">
+                <md-button>
+                    <md-icon>power_settings_new</md-icon>
+                </md-button>
+            </router-link>
+        </md-toolbar>
+
+
+        <md-layout class="dashboard-container">
+            <md-layout md-column>
+                <md-switch v-model="restos" @click.native="updateMap">Voir les restaurants</md-switch>
+                <md-switch v-model="livreurs" @click.native="updateMap" >Voir les livreurs</md-switch>
+                <md-switch v-model="clients" @click.native="updateMap">Voir les clients</md-switch>
+            </md-layout>
+
+            <gmap-map style="width: 50%; height: 100%; float: right;"
+                      :center="center"
+                      :zoom="15"
+            >
+                <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
+                                  :content="infoContent" @closeclick="infoWinOpen=false"></gmap-info-window>
+                <gmap-marker :key="i" v-for="(m,i) in markers" :position="m.position" :clickable="true"
+                             @click="toggleInfoWindow(m,i)"></gmap-marker>
+            </gmap-map>
+        </md-layout>
+
     </div>
 </script>
 

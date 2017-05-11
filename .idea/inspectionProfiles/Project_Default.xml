@@ -14,7 +14,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="41">
+          <list size="47">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -56,6 +56,12 @@
             <item index="38" class="java.lang.String" itemvalue="md-table-head" />
             <item index="39" class="java.lang.String" itemvalue="md-table-cell" />
             <item index="40" class="java.lang.String" itemvalue="md-table-body" />
+            <item index="41" class="java.lang.String" itemvalue="dashboard" />
+            <item index="42" class="java.lang.String" itemvalue="gmap-map" />
+            <item index="43" class="java.lang.String" itemvalue="gmap-marker" />
+            <item index="44" class="java.lang.String" itemvalue="md-switch" />
+            <item index="45" class="java.lang.String" itemvalue="md-layout" />
+            <item index="46" class="java.lang.String" itemvalue="gmap-info-window" />
           </list>
         </value>
       </option>

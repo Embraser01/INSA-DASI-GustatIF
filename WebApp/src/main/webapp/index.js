@@ -29,10 +29,15 @@ function getActionURL(action) {
 
 Vue.config.devtools = true;
 
-// Include Vue material & Vue router & Vue resource
+// Include Vue material & Vue router & Vue resource & VueGoogleMaps
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
 Vue.use(VueResource);
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: 'AIzaSyAziHj8iH4_UZ1tL53eFOgvlc_aGskKHzU'
+    }
+});
 
 
 //
@@ -47,12 +52,12 @@ class UserService {
         this.user = null;
 
         if (DEBUG_MODE) {
-            this.login({
-                email: 'romain.mie@free.fr',
-                password: 138
-            }).then(() => {
-                router.push('/');
-            });
+            // this.login({
+            //     email: 'romain.mie@free.fr',
+            //     password: 138
+            // }).then(() => {
+            //     router.push('/');
+            // });
         }
     }
 
@@ -402,17 +407,114 @@ const Delivery = {
 ////////// DASHBOARD //////////////
 
 const Dashboard = {
-    template: '#dashboard-component'
+    template: '#dashboard-component',
+    props: ['seeDeliveryDone'],
+    data: () => {
+        return {
+            center: {
+                lat: 10.0, lng: 10.0
+            },
+            markers: [],
+            allMarkers: [],
+
+            restos: false, // 1
+            livreurs: false, // 2
+            clients: false, // 3
+
+            infoContent: '',
+            infoWindowPos: {
+                lat: 0,
+                lng: 0
+            },
+            infoWinOpen: false,
+            currentMidx: null,
+            //optional: offset infowindow so it visually sits nicely on top of our marker
+            infoOptions: {
+                pixelOffset: {
+                    width: 0,
+                    height: -35
+                }
+            }
+        }
+    },
+
+    created() {
+        this.$http.post(getActionURL("restaurantsPartenaires"))
+            .then(response => response.json())
+            .then(restaurants => {
+                restaurants.forEach(resto => {
+                    this.allMarkers.push({
+                        position: {
+                            lat: resto.latitude,
+                            lng: resto.longitude
+                        },
+                        type: 1,
+                        infoText: resto.denomination
+                    })
+                });
+
+                // Set the center to the first resto
+                this.center = this.allMarkers[0].position;
+            });
+
+        this.$http.post(getActionURL("livreursPartenaires"))
+            .then(response => response.json())
+            .then(livreurs => {
+                livreurs.forEach(livreur => {
+                    this.allMarkers.push({
+                        position: {
+                            lat: livreur.latitude,
+                            lng: livreur.longitude
+                        },
+                        type: 2,
+                        infoText: livreur.prenom + ' ' + livreur.nom
+                    })
+                });
+            });
+
+        this.$http.post(getActionURL("clientsGustatif"))
+            .then(response => response.json())
+            .then(clients => {
+                clients.forEach(client => {
+                    this.allMarkers.push({
+                        position: {
+                            lat: client.latitude,
+                            lng: client.longitude
+                        },
+                        type: 1,
+                        infoText: client.prenom + ' ' + client.nom
+                    })
+                });
+            });
+    },
+    methods: {
+        updateMap(value) {
+            log(value);
+            this.markers = this.allMarkers.filter(e => {
+                return this.clients && e.type === 3
+                    || this.livreurs && e.type === 2
+                    || this.restos && e.type === 1;
+            });
+        },
+        toggleInfoWindow: function (marker, idx) {
+
+            this.infoWindowPos = marker.position;
+            this.infoContent = marker.infoText;
+
+            //check if its the same marker that was selected if yes toggle
+            if (this.currentMidx === idx) {
+                this.infoWinOpen = !this.infoWinOpen;
+            }
+            //if different marker set infowindow to open and reset current marker index
+            else {
+                this.infoWinOpen = true;
+                this.currentMidx = idx;
+            }
+        }
+    }
 };
 
-const DeliveryHistory = {
-    template: '#delivery-history-component'
-};
-
-const CloseDelivery = {
-    template: '#close-delivery-component'
-};
-
+Vue.component('dashboard', Dashboard);
 
 //
 // ROUTES
@@ -452,18 +554,6 @@ const routes = [
     {
         path: '/delivery',
         component: Delivery
-    },
-    {
-        path: '/dashboard',
-        component: Dashboard,
-        children: [
-            {
-                path: 'history', component: DeliveryHistory
-            },
-            {
-                path: 'close', component: CloseDelivery
-            }
-        ]
     }
 ];
 
@@ -483,10 +573,7 @@ const whitelist = [
 
     '/member',
     '/manager',
-    '/delivery',
-    '/dashboard',
-    '/dashboard/history',
-    '/dashboard/close'
+    '/delivery'
 ];
 
 router.beforeEach((to, from, next) => {

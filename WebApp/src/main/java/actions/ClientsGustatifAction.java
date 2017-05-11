@@ -22,6 +22,13 @@ public class ClientsGustatifAction extends Action {
         if (clients == null) {
             throw new ClientNullException();
         }
+        // Remove useless data
+
+        for (Client c :
+                clients) {
+            c.setListeCommandes(null);
+        }
+
         req.setAttribute(RESULTS_FIELD, clients);
 
     }

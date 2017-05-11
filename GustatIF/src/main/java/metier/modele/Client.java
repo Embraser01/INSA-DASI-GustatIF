@@ -1,14 +1,9 @@
 package metier.modele;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -32,7 +27,7 @@ public class Client implements Serializable {
     
     @OneToMany(mappedBy="client")
     private List<Commande> listeCommandes;
-    
+
     /**
      *
      */
@@ -170,4 +165,7 @@ public class Client implements Serializable {
         return "Client{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", adresse=" + adresse + ", longitude=" + longitude + ", latitude=" + latitude + '}';
     }
 
+    public void setListeCommandes(List<Commande> listeCommandes) {
+        this.listeCommandes = listeCommandes;
+    }
 }
