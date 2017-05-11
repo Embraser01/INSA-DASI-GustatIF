@@ -30,7 +30,6 @@ public class ActionServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         JpaUtil.init();
-        JpaUtil.creerEntityManager();
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

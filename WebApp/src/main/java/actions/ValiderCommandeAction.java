@@ -1,9 +1,5 @@
 package actions;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import exception.MissingInformationException;
 import exception.NotLoggedException;
 import exception.ValiderCommandeException;
@@ -16,7 +12,9 @@ import metier.service.ServiceMetier;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 public class ValiderCommandeAction extends Action {
@@ -32,41 +30,46 @@ public class ValiderCommandeAction extends Action {
 
 
         try {
-            JsonObject obj = new JsonParser().parse(req.getParameter("commande")).getAsJsonObject();
+
+            Map<String, String[]> params = req.getParameterMap();
+            Restaurant restaurant = new Restaurant();
+            List<Produit> produitsDisponibles = null;
 
             Commande commande = new Commande((Client) req.getSession().getAttribute(SESSION_CLIENT_FIELD));
-            Restaurant restaurant = new Restaurant();
 
-            // Setting Restaurant
-            restaurant.setId(obj.get("restaurant").getAsLong());
-            commande.setRestaurant(restaurant);
+            for (Map.Entry<String, String[]> entry : params.entrySet()) {
+                if (entry.getKey().equalsIgnoreCase("commande[restaurant]")) {
+                    // Setting Restaurant
+                    restaurant.setId(Long.valueOf(entry.getValue()[0]));
+                    commande.setRestaurant(restaurant);
+                    produitsDisponibles = this.serviceMetier.produitsDisponibles(restaurant);
 
+                } else if (entry.getKey().startsWith("commande[produits]")
+                        && entry.getKey().endsWith("[id]")
+                        && produitsDisponibles != null
+                        ) {
 
-            // Setting each product
+                    String key = entry.getKey().replaceFirst("\\[id]", "[qte]");
 
-            List<Produit> produitsDisponibles = this.serviceMetier.produitsDisponibles(restaurant);
+                    Produit curr = null;
 
-            JsonArray produits = obj.getAsJsonArray("produits");
-            Produit curr = null;
-            int qte = 0;
-            long id = 0;
+                    int qte = Integer.parseInt(params.get(key)[0]);
+                    long id = Long.valueOf(entry.getValue()[0]);
 
-            for (JsonElement p :
-                    produits) {
+                    for (Produit pr : produitsDisponibles) {
+                        if (id == pr.getId()) {
+                            curr = pr;
+                            break;
+                        }
+                    }
 
-                id = p.getAsJsonObject().get("id").getAsLong();
-                qte = p.getAsJsonObject().get("qte").getAsInt();
-
-                for (Produit pr : produitsDisponibles) {
-                    if (id == pr.getId()) {
-                        curr = pr;
-                        break;
+                    for (int i = 0; i < qte; i++) {
+                        commande.ajouterProduit(curr);
                     }
                 }
-                for (int i = 0; i < qte; i++) {
-                    commande.ajouterProduit(curr);
-                }
             }
+
+            commande.setDateEnregistrementCommande(new Date());
 
             if (!this.serviceMetier.validerCommande(commande)) {
                 throw new ValiderCommandeException();

@@ -298,7 +298,8 @@ const MyAccountBuy = {
         closeDialog() {
             this.$refs.buyDialog.close();
             this.cart = {
-                restaurant: -1
+                restaurant: -1,
+                produits: []
             };
             this.selectedProducts = null;
         }
