@@ -147,15 +147,12 @@ const Signup = {
         signup() {
             userService.signup(this.form)
                 .then(response => {
-                    // TODO SUCCESS SIGNUP
-                    // GET DATA FROM response.json().then(data => this.data = data);
                     log(response);
                     this.$refs.snackbarSuccess.open();
                     setTimeout(() => router.push('login'), 4000);
 
                 })
                 .catch(response => {
-                    // TODO ERROR SIGNUP
                     log(response.json());
                     this.$refs.snackbarFail.open();
                 });
