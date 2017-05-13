@@ -18,7 +18,7 @@ public class RechercherLivraisonAction extends Action {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, ParseException {
 
         List<Commande> commandes = null;
         try {
@@ -31,6 +31,7 @@ public class RechercherLivraisonAction extends Action {
             );
         } catch (ParseException e) {
             // TODO SEND ERROR MSG (rethrow exception)
+            throw e;
         }
 
         req.setAttribute(RESULTS_FIELD, commandes);

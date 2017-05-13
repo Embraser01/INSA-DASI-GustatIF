@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 
 public abstract class Action {
 
@@ -22,7 +23,7 @@ public abstract class Action {
     }
 
     public abstract void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, NotLoggedException, SignUpException, NullAvailableProductException, ClientNullException, ConnectionFailException, IncompatibleTypeException, MissingInformationException, InfoClientUpdateException, ValiderCommandeException;
+            throws ServletException, NotLoggedException, SignUpException, NullAvailableProductException, ClientNullException, ConnectionFailException, IncompatibleTypeException, MissingInformationException, InfoClientUpdateException, ValiderCommandeException, ParseException;
 
 
     protected boolean isClient(HttpServletRequest req, HttpServletResponse res)

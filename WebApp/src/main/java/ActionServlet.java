@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 
 /**
  * "C:\Program Files\Java\jdk1.8.0_77\db\bin\startNetworkServer" -noSecurityManager
@@ -104,6 +105,8 @@ public class ActionServlet extends HttpServlet {
             JsonView.badRequest(req, res, "Request is missing some data");
         } catch (InfoClientUpdateException | ValiderCommandeException e) {
             JsonView.serverError(req, res, "Try again later");
+        } catch (ParseException e) {
+            JsonView.badRequest(req,res,"Request contains erroneous data");
         }
 
         if (!executed) return;
