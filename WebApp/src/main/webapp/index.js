@@ -172,6 +172,8 @@ const MyAccount = {
                 router.push('/');
             });
             // TODO ERROR HANDLING
+            log(response.json());
+            this.$refs.snackbarFail.open();
         }
     }
 };
@@ -325,6 +327,8 @@ const MyAccountBuy = {
             })
             .catch(response => {
                 // TODO ERROR HANDLING
+                log(response.json());
+                this.$refs.snackbarFail.open();
             });
     }
 };

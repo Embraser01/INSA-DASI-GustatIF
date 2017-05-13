@@ -183,6 +183,11 @@
                 <about></about>
             </md-tab>
         </md-tabs>
+        <md-snackbar ref="snackbarFail">
+            <span>Erreur !</span>
+            <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbarFail.close()">Fermer
+            </md-button>
+        </md-snackbar>
     </div>
 </script>
 
