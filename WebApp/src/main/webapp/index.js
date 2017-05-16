@@ -483,7 +483,7 @@ const Dashboard = {
                             lat: client.latitude,
                             lng: client.longitude
                         },
-                        type: 1,
+                        type: 3,
                         infoText: client.prenom + ' ' + client.nom
                     })
                 });

@@ -157,16 +157,20 @@ public class ServiceMetier {
         // on récupère le restaurant vers où va se rendre le livreur 
         RestaurantDAO rdao = new RestaurantDAO();
         Restaurant r = null;
+        ClientDAO cldao = new ClientDAO();
+        Client client = null;
 
         try {
             r = rdao.trouverRestaurantDuProduit(c.getProduitsCommandes()
                     .get(0).getProduit());
+
+            client = cldao.findById(c.getClient().getId());
         } catch (Exception ex) {
             //Logger.getLogger(ServiceTechnique.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Aucun restaurant trouvé");
         }
 
-        if (r != null) {
+        if (r != null && client != null) {
 
             LivreurDAO ldao = new LivreurDAO();
             List<Livreur> livreurs = null;
@@ -206,7 +210,6 @@ public class ServiceMetier {
 
                 // on trie : ordre croissant du temps estimé
                 Collections.sort(livreurs);
-
                 for (int i = 0; i < livreurs.size(); i++) {
                     System.out.println(livreurs.get(i).getId() + " - " +
                             livreurs.get(i).getTempsLivraison());
@@ -225,7 +228,7 @@ public class ServiceMetier {
                         c.setDateEnregistrementCommande(new Date());
 
                         //test
-                        c.getClient().getListeCommandes().add(c);
+                        client.getListeCommandes().add(c);
 
                         cdao.create(c);
                         ldao.merge(livreurs.get(cpt));
